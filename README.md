@@ -1,4 +1,4 @@
-livroRESTful
+Projetos do livro
 ============
 
 Projetos do livro 
