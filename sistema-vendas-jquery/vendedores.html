@@ -1,0 +1,265 @@
+
+
+<h2>Vendedores</h2>
+
+<div class="input-append">
+    <input class="input-xxlarge " id="filtrar" type="text" placeholder="Nome do vendedor">
+    <button id="btnBuscar" class="btn" type="button">Filtrar</button>
+    <button id="btnNovo" class="btn btn-primary" type="button">Novo</button>
+</div>
+
+<div>
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th width="10"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="">Mark</a></td>
+                <td>Otto</td>
+                <td><a href="#"><i class="icon-trash"></i></a></td>
+            </tr>
+            <tr>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td><a href="#"><i class="icon-trash"></i></a></td>
+            </tr>
+            <tr>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td><a href="#"><i class="icon-trash"></i></a></td>
+            </tr>
+            <tr>
+                <td>Larry the Bird</td>
+                <td>Thornton</td>
+                <td><a href="#"><i class="icon-trash"></i></a></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="pagination">
+        <ul>
+            <li><a href="#">Prev</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">Next</a></li>
+        </ul>
+    </div>
+
+
+
+
+    <div class="modal fade" id="novoModal" style="display: none;">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>Vendedor</h3>
+        </div>
+        <div class="modal-body">
+
+            <div id="saveMessage" class="alert alert-success" style="display:none">
+                <img src="img/ajax-loader.gif"> Salvando dados...
+            </div>
+
+
+            <form id="form" class="form-horizontal">
+
+                <div id="errorEmpty" class="alert alert-error" style="display:none">
+                    Campos requeridos
+                </div>
+
+                <div id="erroLoginServer" class="alert alert-error" style="display:none"></div>
+                
+                   <div class="control-group">
+                    <label class="control-label" for="inputMatricula">Data Contratação</label>
+                    <div class="controls">
+                        <input type="text" id="inputContratacao">
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <label class="control-label" for="inputNome">Nome</label>
+                    <div class="controls">
+                        <input type="text" id="inputNome" placeholder="Nome" class="input-block-level">
+                    </div>
+                </div>
+                
+              
+
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">Email</label>
+                    <div class="controls">
+                        <input type="text" id="inputEmail" placeholder="Email" class="input-block-level">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">Senha</label>
+                    <div class="controls">
+                        <input type="password" id="inputSenha" placeholder="Senha">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputLogin">Login</label>
+                    <div class="controls">
+                        <input type="text" id="inputLogin" placeholder="Login">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputCpf">Cpf</label>
+                    <div class="controls">
+                        <input type="text" id="inputCpf" placeholder="Cpf">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputMatricula">Matricula</label>
+                    <div class="controls">
+                        <input type="text" id="inputMatricula" placeholder="Matricula">
+                    </div>
+                </div>
+
+               
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a id="clearForm" class="btn pull-left" href="#"><i class="icon-refresh"></i></a>
+            <a id="salvar" href="#" class="btn btn-primary">Salvar</a>
+        </div>
+    </div>
+
+
+    <script>
+
+
+        $(document).ready(function() {
+            verifyLogin();
+            atualizaGrid();
+            preparaData($("#inputContratacao"));
+        });
+
+        $('#btnNovo').click(function() {
+            $('#novoModal').modal('show');
+        });
+
+        $('#clearForm').click(function() {
+            $("form")[0].reset();
+            $("#erroLoginServer").hide();
+            $("#errorEmpty").hide();
+        });
+
+        $('#salvar').click(function() {
+
+
+            var valido = true;
+
+            //remove o erro destacado em todos os inputs
+            $("#form input").map(function() {
+                $(this).parents("div").removeClass("error");
+            });
+
+            if ($('#inputNome').val().length == 0)
+            {
+                valido = false;
+                $('#inputNome').parents("div").addClass("error");
+            }
+
+            if ($('#inputLogin').val().length == 0)
+            {
+                valido = false;
+                $('#inputLogin').parents("div").addClass("error");
+            }
+
+            if ($('#inputSenha').val().length == 0)
+            {
+                valido = false;
+                $('#inputSenha').parents("div").addClass("error");
+            }
+
+            if (valido)
+            {
+                travar();
+
+                vendedor = JSON.stringify({
+                    nome: $("#inputNome").val(),
+                    email: $("#inputEmail").val(),
+                    login: $("#inputLogin").val(),
+                    senha: $("#inputSenha").val(),
+                    cpf: $("#inputCpf").val(),
+                    matricula: $("#inputMatricula").val(),
+                    dataContratacao: $("#inputContratacao").val(),
+                });
+
+
+                //todo: ajax
+                $.ajax({
+                    type: "post",
+                    url: rootUrl + "vendedor/save",
+                    dataType: "json",
+                    data: vendedor,
+                    success: function(result) {
+                        console.log("success");
+                        console.log(result);
+                        destravar();
+                        $('#novoModal').modal('hide');
+                        $("form")[0].reset();
+                        atualizaGrid();
+
+                    },
+                    error: function(result) {
+                        destravar();
+                        $("#erroLoginServer").html("Erro Fatal " + getErrorMessage(result.responseText));
+                        $("#erroLoginServer").show();
+                        console.log("error");
+                        console.log(result);
+                    }
+
+                });
+
+
+            }
+            else
+            {
+                $("#errorEmpty").show("slide");
+                $("#erroLoginServer").hide();
+            }
+
+        });
+
+
+        function travar()
+        {
+            $("#errorEmpty").hide("slide");
+            $("form").hide("slide");
+            $("#saveMessage").show("slide");
+            $("#salvar").addClass("disabled");
+            $("#clearForm").addClass("disabled");
+        }
+
+        function destravar()
+        {
+            $("#errorEmpty").hide("slide");
+            $("form").show("slide");
+            $("#saveMessage").hide("slide");
+            $("#salvar").removeClass("disabled");
+            $("#clearForm").removeClass("disabled");
+        }
+
+        function atualizaGrid()
+        {
+
+        }
+
+    </script>
+

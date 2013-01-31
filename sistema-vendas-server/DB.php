@@ -90,4 +90,24 @@ class DB {
         return self::getConn()->rollBack();
     }
 
+    /**
+     * Formata uma data para o MySql (05/12/2012 para 2012-12-05)
+     * @param type $date
+     * @return type
+     */
+    public static function dateToMySql($date)
+    {
+        return implode("-",array_reverse(explode("/",$date))); 
+    }
+    
+    /**
+     * Formata uma data do MySql (2012-12-05 para 05/12/2012)
+     * @param type $date
+     * @return type
+     */
+    public static function dateFromMySql($date)
+    {
+         return implode("/",array_reverse(explode("-",$date)));
+    }
+
 }

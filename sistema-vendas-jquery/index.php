@@ -11,14 +11,11 @@
  * HTMl e a parte JavaScript no mesmo arquivo, para facilitar
  * 
  */
-
-if (isset($_GET["go"]))
-{
+if (isset($_GET["go"])) {
     if (!file_exists($_GET["go"] . ".html"))
         $_GET["go"] = "login";
 }
-else
-{
+else {
     $_GET["go"] = "login";
 }
 ?>
@@ -30,11 +27,21 @@ else
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet"/>
+        <link href="css/base/jquery-ui.css" rel="stylesheet"/>
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+
         <link href="css/app.css" rel="stylesheet"/>
     </head>
     <body>
         <script src="js/jquery.js" type="text/javascript"></script>
+        <script src="js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/jquery.cookie.js" type="text/javascript"></script>
         <script src="js/app.js" type="text/javascript"></script>
 
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -48,32 +55,53 @@ else
                     <a class="brand" href="#">Sistema Vendas</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            
+
                             <?php
+
                             /**
                              * Menu é montado de acordo com a pessoa logada (sessão)
                              */
+                            function getActive($go) {
+                                if ($go == $_GET["go"])
+                                    return "class='active'";
+                                return '';
+                            }
+
+                            $mensagemUsuario = "";
+                            $usuario = null;
+
+                            //Obtém o cookie da pessoa logada
+                            if (isset($_COOKIE['usuario'])) {
+                                $usuario = json_decode($_COOKIE['usuario']);
+                                $mensagemUsuario = "Olá {$usuario->nome}";
+                            }
+
+                            if (isset($usuario)) {
+                                if ($usuario->tipo == "a") {
+                                    echo "<li " . getActive('bemVindo') . "><a href='index.php?go=bemVindo'>Home</a></li>";
+                                    echo "<li " . getActive('vendedores') . "><a href='index.php?go=vendedores'>Vendedores</a></li>";
+                                    echo "<li " . getActive('clientes') . "><a href='index.php?go=clientes'>Clientes</a></li>";
+                                    echo "<li " . getActive('transportadoras') . "><a href='index.php?go=transportadoras'>Transportadoras</a></li>";
+                                    echo "<li " . getActive('produtos') . "><a href='index.php?go=produtos'>Produtos</a></li>";
+                                    echo "<li " . getActive('fornecedores') . "><a href='index.php?go=fornecedores'>Fornecedores</a></li>";
+                                    echo "<li " . getActive('vendas') . "><a href='index.php?go=vendas'>Vendas</a></li>";
+                                }
+                            }
                             ?>
-                            
-                            
-                            <li class="active"><a href="index.php?go=home">Home</a></li>
-                            <li><a href="index.php?go=about">About</a></li>
-                            <li><a href="index.php?go=contact">Contact</a></li>
-                            
-                            
+
+
                         </ul>
+
+                        <p class="navbar-text pull-right"><?php echo $mensagemUsuario ?></p>
+
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
         </div>
 
         <div class="container">
-            
-            <p>
-                <?php require($_GET["go"] . ".html")?>                
-            </p>
-
+            <?php require($_GET["go"] . ".html") ?>
         </div> <!-- /container -->
-        
+
     </body>
 </html>

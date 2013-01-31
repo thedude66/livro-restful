@@ -44,9 +44,7 @@
         Login/Senha requeridos
     </div>
     
-    <div id="erroLoginServer" class="alert alert-error" style="display:none">
-        
-    </div>
+    <div id="erroLoginServer" class="alert alert-error" style="display:none"></div>
 
 
 
@@ -111,7 +109,7 @@
         else
         {
             $("#erroLoginServer").hide();
-            $("#erroLoginEmpty").show("slide");
+            $("#erroLoginEmpty").show();
         }
 
         event.preventDefault();
@@ -123,17 +121,19 @@
         
         $("#tryLogin").hide();
         $("#erroLoginServer").hide();
-        $("#erroLoginEmpty").hide();
+        $("#erroLoginEmpty").hide();      
         
-        console.log(data);
+        $.cookie.json = true;
+        $.cookie('usuario', data.result, { expires: 7 });
         
+        goPage("bemVindo");
         
     }
 
     function onErrorLogin(error) {
         $("#tryLogin").hide();
-        $("#erroLoginServer").html(error.responseText);
-        $("#erroLoginServer").show("slide");
+        $("#erroLoginServer").html(getErrorMessage(error.responseText));
+        $("#erroLoginServer").show();
         $("#btnIr").removeClass("disabled");
     }
 

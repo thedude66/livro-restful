@@ -19,6 +19,7 @@ class Usuario {
     
     public function post_login($usuario)
     {
+        
         if ( (empty($usuario->login)) or (empty($usuario->senha)) )
             throw new Exception("Login ou senha precisam ser preenchidos");
         
@@ -33,10 +34,11 @@ class Usuario {
         if ($db_usuario!=null)
         {
             $this->doLogin($db_usuario);
+            unset($db_usuario->senha);
             return $db_usuario;
         }
         else
-            return false;
+            throw new Exception("Erro ao efetuar login. Usuário/Senha incorretos");
         
     }
     
