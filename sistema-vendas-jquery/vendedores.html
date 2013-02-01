@@ -9,12 +9,13 @@
 </div>
 
 <div>
-    <table class="table table-bordered table-hover table-striped">
+    <table id="tableVendedores" class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
-
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th width="10%">Matricula</th>
+                <th>Nome</th>
+                <th>Login</th>
+                <th width="10%">Data Cont.</th>
                 <th width="10"></th>
             </tr>
         </thead>
@@ -24,37 +25,8 @@
                 <td>Otto</td>
                 <td><a href="#"><i class="icon-trash"></i></a></td>
             </tr>
-            <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td><a href="#"><i class="icon-trash"></i></a></td>
-            </tr>
-            <tr>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td><a href="#"><i class="icon-trash"></i></a></td>
-            </tr>
-            <tr>
-                <td>Larry the Bird</td>
-                <td>Thornton</td>
-                <td><a href="#"><i class="icon-trash"></i></a></td>
-            </tr>
         </tbody>
     </table>
-
-
-    <div class="pagination">
-        <ul>
-            <li><a href="#">Prev</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">Next</a></li>
-        </ul>
-    </div>
-
-
 
 
     <div class="modal fade" id="novoModal" style="display: none;">
@@ -70,15 +42,17 @@
 
 
             <form id="form" class="form-horizontal">
+                <input type="hidden" id="inputId">
+                <input type="hidden" id="inputIdUsuario">
 
                 <div id="errorEmpty" class="alert alert-error" style="display:none">
                     Campos requeridos
                 </div>
 
-                <div id="erroLoginServer" class="alert alert-error" style="display:none"></div>
-                
-                   <div class="control-group">
-                    <label class="control-label" for="inputMatricula">Data Contratação</label>
+                <div id="errorServer" class="alert alert-error" style="display:none"></div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputContratacao">Data Contratação</label>
                     <div class="controls">
                         <input type="text" id="inputContratacao">
                     </div>
@@ -91,13 +65,20 @@
                         <input type="text" id="inputNome" placeholder="Nome" class="input-block-level">
                     </div>
                 </div>
-                
-              
+
+
 
                 <div class="control-group">
                     <label class="control-label" for="inputEmail">Email</label>
                     <div class="controls">
                         <input type="text" id="inputEmail" placeholder="Email" class="input-block-level">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputLogin">Login</label>
+                    <div class="controls">
+                        <input type="text" id="inputLogin" placeholder="Login">
                     </div>
                 </div>
 
@@ -108,12 +89,7 @@
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label" for="inputLogin">Login</label>
-                    <div class="controls">
-                        <input type="text" id="inputLogin" placeholder="Login">
-                    </div>
-                </div>
+
 
                 <div class="control-group">
                     <label class="control-label" for="inputCpf">Cpf</label>
@@ -129,12 +105,11 @@
                     </div>
                 </div>
 
-               
+
 
             </form>
         </div>
         <div class="modal-footer">
-            <a id="clearForm" class="btn pull-left" href="#"><i class="icon-refresh"></i></a>
             <a id="salvar" href="#" class="btn btn-primary">Salvar</a>
         </div>
     </div>
@@ -148,27 +123,24 @@
             atualizaGrid();
             preparaData($("#inputContratacao"));
         });
-
         $('#btnNovo').click(function() {
+            
+            if ($("#inputId").val()!="")
+                 $("form")[0].reset();
+            
             $('#novoModal').modal('show');
         });
-
-        $('#clearForm').click(function() {
-            $("form")[0].reset();
-            $("#erroLoginServer").hide();
-            $("#errorEmpty").hide();
+        $('#btnBuscar').click(function() {
+            atualizaGrid();
         });
-
+       
         $('#salvar').click(function() {
 
-
             var valido = true;
-
             //remove o erro destacado em todos os inputs
             $("#form input").map(function() {
                 $(this).parents("div").removeClass("error");
             });
-
             if ($('#inputNome').val().length == 0)
             {
                 valido = false;
@@ -189,9 +161,10 @@
 
             if (valido)
             {
-                travar();
-
+                travarFormulario();
                 vendedor = JSON.stringify({
+                    idVendedor: $("#inputId").val(),
+                    idUsuario: $("#inputIdUsuario").val(),
                     nome: $("#inputNome").val(),
                     email: $("#inputEmail").val(),
                     login: $("#inputLogin").val(),
@@ -200,8 +173,6 @@
                     matricula: $("#inputMatricula").val(),
                     dataContratacao: $("#inputContratacao").val(),
                 });
-
-
                 //todo: ajax
                 $.ajax({
                     type: "post",
@@ -211,14 +182,13 @@
                     success: function(result) {
                         console.log("success");
                         console.log(result);
-                        destravar();
+                        destravarFormulario();
                         $('#novoModal').modal('hide');
                         $("form")[0].reset();
                         atualizaGrid();
-
                     },
                     error: function(result) {
-                        destravar();
+                        destravarFormulario();
                         $("#erroLoginServer").html("Erro Fatal " + getErrorMessage(result.responseText));
                         $("#erroLoginServer").show();
                         console.log("error");
@@ -226,19 +196,15 @@
                     }
 
                 });
-
-
             }
             else
             {
                 $("#errorEmpty").show("slide");
-                $("#erroLoginServer").hide();
+                $("#erroServer").hide();
             }
 
         });
-
-
-        function travar()
+        function travarFormulario()
         {
             $("#errorEmpty").hide("slide");
             $("form").hide("slide");
@@ -247,7 +213,7 @@
             $("#clearForm").addClass("disabled");
         }
 
-        function destravar()
+        function destravarFormulario()
         {
             $("#errorEmpty").hide("slide");
             $("form").show("slide");
@@ -258,8 +224,87 @@
 
         function atualizaGrid()
         {
+            $("#tableVendedores").find("tbody tr").remove();
+            $("#tableVendedores").find("tbody").append('<tr><td colspan=10><div class="alert alert-success"><img src="img/ajax-loader.gif">Carregando...</div></td></tr>')
 
+            filtro = "";
+            if ($("#filtrar").val())
+                filtro = "/" + $("#filtrar").val();
+
+            $.ajax({
+                type: "get",
+                url: rootUrl + "vendedor/listAll" + filtro,
+                dataType: "json",
+                success: function(data) {
+                    console.log("success");
+                    console.log(data);
+                    $("#tableVendedores").find("tbody tr").remove();
+                    data.result.forEach(function(vendedor) {
+
+                        $row = "<tr><td>" + vendedor.matricula
+                                + "</td><td><a id='edit' href='#' data-id='" + vendedor.id + "'>" + vendedor.nome + "</a>"
+                                + "</td><td>" + vendedor.login
+                                + "</td><td>" + vendedor.dataContratacao
+                                + "</td><td> <a href='#'><i class='icon-remove' data-idUsuario='" + vendedor.idUsuario + "' data-id='" + vendedor.id + "' data-nome='" + vendedor.nome + "'/></i></a>"
+                                + "</td></tr>";
+                        $("#tableVendedores > tbody:last").append($row);
+                    });
+                }
+            });
         }
+
+
+        $(".icon-remove").live("click", function() {
+            id = $(this).attr("data-id");
+            idUsuario = $(this).attr("data-idUsuario");
+            nome = $(this).attr("data-nome");
+            $row = $(this);
+            if (confirm("Excluir " + nome + "?"))
+            {
+
+                $.ajax({
+                    type: "post",
+                    url: rootUrl + "vendedor/delete",
+                    dataType: "json",
+                    data: JSON.stringify({id: id, idUsuario: idUsuario}),
+                    success: function() {
+                        $row.parent().parent().parent().fadeTo(400, 0, function() {
+                            $row.parent().parent().parent().remove();
+                        });
+                    },
+                    error: function() {
+
+                    }
+                });
+            }
+
+        });
+
+        $("#edit").live("click", function() {
+            id = $(this).attr("data-id");
+
+            $.ajax({
+                type: "get",
+                url: rootUrl + "vendedor/list/" + id,
+                dataType: "json",
+                success: function(data) {
+                    vendedor = data.result;
+                    $("#inputId").val(vendedor.id);
+                    $("#inputIdUsuario").val(vendedor.idUsuario);
+                    $("#inputNome").val(vendedor.nome);
+                    $("#inputEmail").val(vendedor.email);
+                    $("#inputLogin").val(vendedor.login);
+                    $("#inputSenha").val(vendedor.senha);
+                    $("#inputCpf").val(vendedor.cpf);
+                    $("#inputMatricula").val(vendedor.matricula);
+                    $("#inputContratacao").val(vendedor.dataContratacao);
+                    $('#novoModal').modal('show');
+                }
+            });
+
+
+        });
+
 
     </script>
 
