@@ -40,7 +40,6 @@
                 <img src="img/ajax-loader.gif"> Salvando dados...
             </div>
 
-
             <form id="form" class="form-horizontal">
                 <input type="hidden" id="inputId">
                 <input type="hidden" id="inputIdUsuario">
@@ -124,16 +123,20 @@
             preparaData($("#inputContratacao"));
         });
         $('#btnNovo').click(function() {
-            
-            if ($("#inputId").val()!="")
-                 $("form")[0].reset();
-            
+
+            if ($("#inputId").val() != "") {
+                $("form")[0].reset();
+                $("#inputId").val("");
+                $("#inputIdUsuario").val("");
+                $("#errorServer").hide();
+            }
             $('#novoModal').modal('show');
         });
+
         $('#btnBuscar').click(function() {
             atualizaGrid();
         });
-       
+
         $('#salvar').click(function() {
 
             var valido = true;
@@ -180,8 +183,6 @@
                     dataType: "json",
                     data: vendedor,
                     success: function(result) {
-                        console.log("success");
-                        console.log(result);
                         destravarFormulario();
                         $('#novoModal').modal('hide');
                         $("form")[0].reset();
@@ -189,10 +190,9 @@
                     },
                     error: function(result) {
                         destravarFormulario();
-                        $("#erroLoginServer").html("Erro Fatal " + getErrorMessage(result.responseText));
-                        $("#erroLoginServer").show();
-                        console.log("error");
                         console.log(result);
+                        $("#errorServer").html(getErrorMessage(result.responseText));
+                        $("#errorServer").show();
                     }
 
                 });
@@ -273,7 +273,7 @@
                         });
                     },
                     error: function() {
-
+                        
                     }
                 });
             }
@@ -282,12 +282,15 @@
 
         $("#edit").live("click", function() {
             id = $(this).attr("data-id");
+            $("#errorServer").hide("slide");
+            
 
             $.ajax({
                 type: "get",
                 url: rootUrl + "vendedor/list/" + id,
                 dataType: "json",
                 success: function(data) {
+
                     vendedor = data.result;
                     $("#inputId").val(vendedor.id);
                     $("#inputIdUsuario").val(vendedor.idUsuario);
@@ -298,7 +301,7 @@
                     $("#inputCpf").val(vendedor.cpf);
                     $("#inputMatricula").val(vendedor.matricula);
                     $("#inputContratacao").val(vendedor.dataContratacao);
-                    $('#novoModal').modal('show');
+                    $("#novoModal").modal("show");
                 }
             });
 

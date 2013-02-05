@@ -6,6 +6,26 @@ class Vendedor {
 
         if ($vendedor->idVendedor) {
 
+
+            //verifica se o login foi alterado, e se foi, deve verificar
+            // se o login já existe para outro usuário
+            $sqlUsuario = "SELECT id,login FROM usuarios WHERE id=:id";
+            $stmtUsuario = DB::prepare($sqlUsuario);
+            $stmtUsuario->bindParam("id", $vendedor->idUsuario);
+            $stmtUsuario->execute();
+            $usuario = $stmtUsuario->fetch();
+            if ($usuario->login != $vendedor->login) {
+                $sqlSelect = "SELECT id,nome FROM usuarios WHERE (login=:login)";
+                $stmtSelect = DB::prepare($sqlSelect);
+                $stmtSelect->bindValue("login", $vendedor->login);
+                $stmtSelect->execute();
+                $usuario = $stmtSelect->fetch();
+                if ($usuario)
+                    throw new Exception("Login pertencente ao usuário '{$usuario->nome}'");
+            }
+
+
+
             //update
             $sqlUpdateUsuario = "UPDATE usuarios SET nome=:nome,email=:email,login=:login,senha=:senha WHERE id=:idUsuario";
             $sqlUpdateVendedor = "UPDATE vendedores SET cpf=:cpf,matricula=:matricula,dataContratacao=:dataContratacao WHERE id=:idVendedor";
@@ -24,12 +44,12 @@ class Vendedor {
                 $stmtUsuario->bindParam("idUsuario", $vendedor->idUsuario);
                 $stmtUsuario->execute();
 
-                $stmtVendedor = DB::prepare($sqlUpdateVendedor);
-                $stmtVendedor->bindParam("cpf", $vendedor->cpf);
-                $stmtVendedor->bindParam("matricula", $vendedor->matricula);
-                $stmtVendedor->bindParam("dataContratacao", $vendedor->dataContratacao);
-                $stmtVendedor->bindParam("idVendedor", $vendedor->idVendedor);
-                $stmtVendedor->execute();
+                $stmtUsuario = DB::prepare($sqlUpdateVendedor);
+                $stmtUsuario->bindParam("cpf", $vendedor->cpf);
+                $stmtUsuario->bindParam("matricula", $vendedor->matricula);
+                $stmtUsuario->bindParam("dataContratacao", $vendedor->dataContratacao);
+                $stmtUsuario->bindParam("idVendedor", $vendedor->idVendedor);
+                $stmtUsuario->execute();
 
 
                 DB::commit();
@@ -38,6 +58,18 @@ class Vendedor {
                 throw new Exception($exc->getMessage());
             }
         } else {
+
+
+            //Verificar se login já existem
+            $sqlSelect = "SELECT id,nome FROM usuarios where (login=:login)";
+            $stmtSelect = DB::prepare($sqlSelect);
+            $stmtSelect->bindValue("login", $vendedor->login);
+            $stmtSelect->execute();
+            $usuario = $stmtSelect->fetch();
+            if ($usuario)
+                throw new Exception("Login pertencente ao usuário '{$usuario->nome}'");
+
+
 
             //insert
             $sqlInsertUsuario = "INSERT INTO usuarios (nome,email,login,senha,tipo) VALUES (:nome,:email,:login,:senha,:tipo)";
@@ -63,13 +95,13 @@ class Vendedor {
 
                 $vendedor->idUsuario = DB::lastInsertId();
 
-                $stmtVendedor = DB::prepare($sqlInsertVendedor);
-                $stmtVendedor->bindParam("cpf", $vendedor->cpf);
-                $stmtVendedor->bindParam("matricula", $vendedor->matricula);
-                $stmtVendedor->bindParam("ativo", $vendedor->ativo);
-                $stmtVendedor->bindParam("idUsuario", $vendedor->idUsuario);
-                $stmtVendedor->bindParam("dataContratacao", $vendedor->dataContratacao);
-                $stmtVendedor->execute();
+                $stmtUsuario = DB::prepare($sqlInsertVendedor);
+                $stmtUsuario->bindParam("cpf", $vendedor->cpf);
+                $stmtUsuario->bindParam("matricula", $vendedor->matricula);
+                $stmtUsuario->bindParam("ativo", $vendedor->ativo);
+                $stmtUsuario->bindParam("idUsuario", $vendedor->idUsuario);
+                $stmtUsuario->bindParam("dataContratacao", $vendedor->dataContratacao);
+                $stmtUsuario->execute();
 
                 $vendedor->id = DB::lastInsertId();
 

@@ -13,12 +13,12 @@ $app = new \Slim\Slim(array(
 
 $app->contentType("application/json");
 
-$app->error(function ( Exception $e ) {
+$app->error(function ( Exception $e = null) use ($app) {
          echo '{"error":{"text":"'. $e->getMessage() .'"}}';
         });
 
 //GET pode possuir um parametro na URL
-$app->get('/:controller/:action(/:parameter)', function ($controller, $action, $parameter = null) {
+$app->get('/:controller/:action(/:parameter)', function ($controller, $action, $parameter = null) use($app) {
 
             include_once "classes/{$controller}.php";
             $classe = new $controller();
@@ -27,7 +27,7 @@ $app->get('/:controller/:action(/:parameter)', function ($controller, $action, $
         });
 
 //POST não possui parâmetros na URL, e sim na requisição
-$app->post('/:controller/:action', function ($controller, $action) {
+$app->post('/:controller/:action', function ($controller, $action) use ($app) {
 
             $request = json_decode(\Slim\Slim::getInstance()->request()->getBody());
             include_once "classes/{$controller}.php";
