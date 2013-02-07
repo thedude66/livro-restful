@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			
+			protected function onResult(event:ResultEvent):void
+			{
+				var objJSON:Object = JSON.parse(event.result.toString());
+				Alert.show(objJSON.result.toString());
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:HTTPService id="helloWorldService" result="onResult(event)"/>
+	</fx:Declarations>
+	
+	<s:HGroup paddingLeft="10" paddingTop="10">
+		<s:TextInput id="inputNome" width="200" />
+		<s:Button id="btn" label="Say Hello">
+			<s:click>
+				<![CDATA[
+				helloWorldService.url = "http://localhost/rest-base/Teste/helloWorld/" + inputNome.text;
+				helloWorldService.send();
+				]]>
+			</s:click>
+		</s:Button>
+	</s:HGroup> 
+	
+</s:Application>

@@ -8,7 +8,7 @@ function getErrorMessage(jsonError) {
 }
 
 function goPage(page) {
-    location.href = clientUrl + "?go=" + page;
+    location.href = clientUrl + "?go=" + page; 
 }
 
 function verifyLogin() {
