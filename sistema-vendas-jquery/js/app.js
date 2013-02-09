@@ -1,8 +1,11 @@
 
 
+/* variaveis globais */
 var rootUrl = "http://localhost/sistema-vendas-server/";
 var clientUrl = "http://localhost/sistema-vendas-jquery/index.php";
 
+
+/* métodos globais */
 function getErrorMessage(jsonError) {
     return (JSON.parse(jsonError)).error.text;
 }
@@ -24,6 +27,22 @@ function preparaData(data) {
         event.preventDefault();
     });
 }
+
+
+$("#linkSair").click(function(){
+    
+    $.ajax({
+       type: "get",
+       url: rootUrl + "usuario/logout",
+       success:function(){
+           $.removeCookie('usuario');
+           goPage("login");
+       }
+    });
+    
+});
+
+
 
 
 

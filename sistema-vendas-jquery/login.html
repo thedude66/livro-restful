@@ -44,7 +44,7 @@
         Login/Senha requeridos
     </div>
     
-    <div id="errorServerServer" class="alert alert-error" style="display:none"></div>
+    <div id="erroLoginServer" class="alert alert-error" style="display:none"></div>
 
 
 
@@ -57,86 +57,4 @@
 <div id="tryLogin" class="alert alert-success" style="display:none">
     <img src="img/ajax-loader.gif"> Realizando login...
 </div>
-
-
-<script>
-
-
-    $(document).ready(function() {
-
-
-
-    });
-
-    $("#btnIr").click(function(event) {
-
-        $valido = true;
-
-        $("#form-login input").map(function() {
-            if ($(this).val().length == 0)
-            {
-                $valido = false;
-                $(this).parents("div").addClass("error");
-            }
-            else
-            {
-                $(this).parents("div").removeClass("error");
-            }
-        });
-
-        if ($valido)
-        {
-            $("#erroLoginEmpty").hide();
-            $("#erroLoginServer").hide();
-            $("#btnIr").addClass("disabled");
-            $("#tryLogin").show();
-
-            data = JSON.stringify({"login": $("#login").val(), "senha": $("#senha").val()});
-
-            $.ajax({
-                type: "post",
-                url: rootUrl+"usuario/login",
-                dataType: "json",
-                
-                data:data,
-                success: onSuccessLogin,
-                error: onErrorLogin
-            });
-
-
-
-        }
-        else
-        {
-            $("#erroLoginServer").hide();
-            $("#erroLoginEmpty").show();
-        }
-
-        event.preventDefault();
-
-
-    });
-
-    function onSuccessLogin(data) {
-        
-        $("#tryLogin").hide();
-        $("#erroLoginServer").hide();
-        $("#erroLoginEmpty").hide();      
-        
-        $.cookie.json = true;
-        $.cookie('usuario', data.result, { expires: 7 });
-        
-        goPage("bemVindo");
-        
-    }
-
-    function onErrorLogin(error) {
-        $("#tryLogin").hide();
-        $("#erroLoginServer").html(getErrorMessage(error.responseText));
-        $("#erroLoginServer").show();
-        $("#btnIr").removeClass("disabled");
-    }
-
-
-</script>
 
