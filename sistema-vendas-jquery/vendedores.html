@@ -98,7 +98,7 @@
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="inputMatricula">Matricula</label>
+                    <label class="control-label" for="inputMatricula">Matrícula</label>
                     <div class="controls">
                         <input type="text" id="inputMatricula" placeholder="Matricula">
                     </div>
@@ -200,25 +200,26 @@
             }
             else
             {
-                $("#errorEmpty").show("slide");
+                $("#errorEmpty").show();
                 $("#erroServer").hide();
             }
 
         });
         function travarFormulario()
         {
-            $("#errorEmpty").hide("slide");
-            $("form").hide("slide");
-            $("#saveMessage").show("slide");
+            $("#errorEmpty").hide();
+            $("form").hide();
+            $("#saveMessage").show();
             $("#salvar").addClass("disabled");
             $("#clearForm").addClass("disabled");
         }
 
         function destravarFormulario()
         {
-            $("#errorEmpty").hide("slide");
-            $("form").show("slide");
-            $("#saveMessage").hide("slide");
+            $("#errorEmpty").hide();
+            $("#errorServer").hide();
+            $("form").show();
+            $("#saveMessage").hide();
             $("#salvar").removeClass("disabled");
             $("#clearForm").removeClass("disabled");
         }
@@ -282,8 +283,11 @@
         });
 
         $("#edit").live("click", function() {
+        
             id = $(this).attr("data-id");
-            $("#errorServer").hide("slide");
+        
+            $("#errorServer").hide();
+            $("#errorEmpty").hide();
             
 
             $.ajax({

@@ -73,7 +73,7 @@ else {
                             //Obtém o cookie da pessoa logada
                             if (isset($_COOKIE['usuario'])) {
                                 $usuario = json_decode($_COOKIE['usuario']);
-                                $mensagemUsuario = "Olá {$usuario->nome}";
+                                $mensagemUsuario = "[Olá {$usuario->nome}] <a id='linkPerfil' href='#' class='navbar-link'>Perfil</a> - <a id='linkSair' href='#' class='navbar-link'>Sair</a> ";
                             }
 
                             if (isset($usuario)) {
@@ -81,9 +81,7 @@ else {
                                     echo "<li " . getActive('bemVindo') . "><a href='index.php?go=bemVindo'>Home</a></li>";
                                     echo "<li " . getActive('vendedores') . "><a href='index.php?go=vendedores'>Vendedores</a></li>";
                                     echo "<li " . getActive('clientes') . "><a href='index.php?go=clientes'>Clientes</a></li>";
-                                    echo "<li " . getActive('transportadoras') . "><a href='index.php?go=transportadoras'>Transportadoras</a></li>";
                                     echo "<li " . getActive('produtos') . "><a href='index.php?go=produtos'>Produtos</a></li>";
-                                    echo "<li " . getActive('fornecedores') . "><a href='index.php?go=fornecedores'>Fornecedores</a></li>";
                                     echo "<li " . getActive('vendas') . "><a href='index.php?go=vendas'>Vendas</a></li>";
                                 }
                             }
