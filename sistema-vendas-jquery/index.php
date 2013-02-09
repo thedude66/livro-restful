@@ -38,11 +38,6 @@ else {
         <link href="css/app.css" rel="stylesheet"/>
     </head>
     <body>
-        <script src="js/jquery.js" type="text/javascript"></script>
-        <script src="js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="js/jquery.cookie.js" type="text/javascript"></script>
-        <script src="js/app.js" type="text/javascript"></script>
 
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
@@ -73,7 +68,7 @@ else {
                             //Obtém o cookie da pessoa logada
                             if (isset($_COOKIE['usuario'])) {
                                 $usuario = json_decode($_COOKIE['usuario']);
-                                $mensagemUsuario = "[Olá {$usuario->nome}] <a id='linkPerfil' href='#' class='navbar-link'>Perfil</a> - <a id='linkSair' href='#' class='navbar-link'>Sair</a> ";
+                                $mensagemUsuario = "Olá {$usuario->nome} [ <a id='linkPerfil' href='#' class='navbar-link'>Perfil</a> - <a id='linkSair' href='#' class='navbar-link'>Sair</a> ] ";
                             }
 
                             if (isset($usuario)) {
@@ -101,5 +96,14 @@ else {
             <?php require($_GET["go"] . ".html") ?>
         </div> <!-- /container -->
 
+        <script src="js/jquery.js" type="text/javascript"></script>
+        <script src="js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/jquery.cookie.js" type="text/javascript"></script>
+        <script src="js/app.js" type="text/javascript"></script>
+        
+        <!-- toda página tem o seu arquivo JS relativo -->
+        <script src="<?php echo 'js/'.$_GET["go"] . ".js"?>" type="text/javascript"></script>
+        
     </body>
 </html>
