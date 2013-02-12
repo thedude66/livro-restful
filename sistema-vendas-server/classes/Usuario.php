@@ -54,10 +54,10 @@ class Usuario {
          */
         switch ($tipo) {
             case "a":
-                $sql = "SELECT nome,email,login,lastLogin,lastIp,tipo FROM usuarios WHERE id=:id";
+                $sql = "SELECT nome,email,login,DATE_FORMAT(lastLogin, '%d/%m/%Y %h:%m:%s') as lastLogin,lastIp,tipo FROM usuarios WHERE id=:id";
                 break;
             case "v":
-                $sql = "SELECT u.nome,u.email,u.login,u.lastLogin,u.lastIp,u.tipo,v.cpf,v.matricula,DATE_FORMAT(v.dataContratacao, '%d/%m/%Y') AS dataContratacao FROM usuarios u, vendedores v WHERE u.id=:id and u.id = v.idUsuario";
+                $sql = "SELECT u.nome,u.email,u.login,DATE_FORMAT(u.lastLogin, '%d/%m/%Y %h:%m:%s') as lastLogin,u.lastIp,u.tipo,v.cpf,v.matricula,DATE_FORMAT(v.dataContratacao, '%d/%m/%Y') AS dataContratacao FROM usuarios u, vendedores v WHERE u.id=:id and u.id = v.idUsuario";
                 break;
             case "c":
                 $sql = "SELECT u.nome,u.email,u.login,u.lastLogin,u.lastIp,c.cpf FROM usuarios u, clientes c WHERE id=:id and u.id = c.idUsuario";
@@ -80,6 +80,14 @@ class Usuario {
     }
 
     protected function doLogin($usuario) {
+        
+        /* Adiciona a data/ip do login */
+        $sql = "UPDATE usuarios SET lastLogin=now(),lastIp=:lastIp WHERE id=:id";
+        $stmt = DB::prepare($sql);
+        $stmt->bindParam("lastIp",$_SERVER['REMOTE_ADDR']);
+        $stmt->bindParam("id", $usuario->id);
+        $stmt->execute();
+        
         $_SESSION["login_id"] = $usuario->id;
         $_SESSION["login_tipo"] = $usuario->tipo;
     }
