@@ -11,7 +11,7 @@ function getErrorMessage(jsonError) {
 }
 
 function goPage(page) {
-    location.href = clientUrl + "?go=" + page; 
+    location.href = clientUrl + "?go=" + page;
 }
 
 function verifyLogin() {
@@ -28,18 +28,42 @@ function preparaData(data) {
     });
 }
 
+function getDescTipo($tipo)
+{
+    /*
+     * Não é interessante criar switch dessa forma, pois quando formos
+     * criar um novo tipo, teremos que vir até este código e adicionar
+     * mais um item. A solução para este problema é criar classes abstratas,
+     * mas como nosso objetivo é abordar o RESTful, não iremos fazer isso em 
+     * um primeiro momento.
+     */
+    switch ($tipo) {
+        case "a":
+            return "Admin";
+            break;
+        case "v":
+            return "Vendedor";
+            break;
+        case "c":
+            return "Cliente";
+            break;
 
-$("#linkSair").click(function(){
-    
+    }
+
+}
+
+
+$("#linkSair").click(function() {
+
     $.ajax({
-       type: "get",
-       url: rootUrl + "usuario/logout",
-       success:function(){
-           $.removeCookie('usuario');
-           goPage("login");
-       }
+        type: "get",
+        url: rootUrl + "usuario/logout",
+        success: function() {
+            $.removeCookie('usuario');
+            goPage("login");
+        }
     });
-    
+
 });
 
 

@@ -6,6 +6,7 @@
  * index.php?go=<nomeDaPagina>
  * 
  * nomeDaPagina será carregado como um arquivo PHP na DIV "pagina".
+ * js/nomeDaPagna.js será carregado após o jquery carregar
  * 
  * Todo acesso a dados é feito pelo PHP. Cada arquivo PHP possui a parte
  * HTMl e a parte JavaScript no mesmo arquivo, para facilitar
@@ -68,7 +69,7 @@ else {
                             //Obtém o cookie da pessoa logada
                             if (isset($_COOKIE['usuario'])) {
                                 $usuario = json_decode($_COOKIE['usuario']);
-                                $mensagemUsuario = "Olá {$usuario->nome} [ <a id='linkPerfil' href='#' class='navbar-link'>Perfil</a> - <a id='linkSair' href='#' class='navbar-link'>Sair</a> ] ";
+                                $mensagemUsuario = "Olá {$usuario->nome} [ <a id='linkPerfil' href='index.php?go=perfil' class='navbar-link'>Perfil</a> - <a id='linkSair' href='#' class='navbar-link'>Sair</a> ] ";
                             }
 
                             if (isset($usuario)) {
