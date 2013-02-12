@@ -73,7 +73,6 @@ $('#salvar').click(function() {
             },
             error: function(result) {
                 destravarFormulario();
-                console.log(result);
                 $("#errorServer").html(getErrorMessage(result.responseText));
                 $("#errorServer").show();
             }
