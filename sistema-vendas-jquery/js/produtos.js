@@ -93,7 +93,7 @@ function destravarFormulario()
 
 function atualizaGrid()
 {
-    
+
     $("#tableProdutos").find("tbody tr").remove();
     $("#tableProdutos").find("tbody").append('<tr><td colspan=10><div class="alert alert-success"><img src="img/ajax-loader.gif">Carregando...</div></td></tr>');
 
@@ -116,6 +116,12 @@ function atualizaGrid()
                         + "</td></tr>";
                 $("#tableProdutos > tbody:last").append($row);
             });
+        },
+        error: function(result)
+        {
+            $("#errorLoad").html(getErrorMessage(result.responseText));
+            $("#errorLoad").show();
+            $("#tableProdutos").find("tbody tr").remove();
         }
     });
 }
@@ -170,9 +176,14 @@ $("#edit").live("click", function() {
             $("#checkAivo").val(produto.ativo);
             $("#selectCategoria").val(produto.idCategoria);
             $("#selectFornecedor").val(produto.idFornecedor);
-            
-            
+
+
             $("#novoModal").modal("show");
+        },
+        error: function(result)
+        {
+            $("#errorLoad").html(getErrorMessage(result.responseText));
+            $("#errorLoad").show();
         }
     });
 

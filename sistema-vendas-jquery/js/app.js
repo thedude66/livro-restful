@@ -52,17 +52,23 @@ function getDescTipo($tipo)
 
 }
 
+$(document).ready(function() {
 
-$("#linkSair").click(function() {
+    $("#linkSair").click(function() {
 
-    $.ajax({
-        type: "get",
-        url: rootUrl + "usuario/logout",
-        success: function() {
-            $.removeCookie('usuario');
-            goPage("login");
-        }
+        $.ajax({
+            type: "get",
+            url: rootUrl + "usuario/logout",
+            success: function() {
+                $.removeCookie('usuario');
+                goPage("login");
+            }
+        });
+
     });
+
+    $(".moeda").maskMoney({thousands:'.', decimal:','});
+    
 
 });
 

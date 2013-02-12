@@ -49,7 +49,7 @@ class Produto {
         if ($parameter)
             $filtroWHERE = " AND p.nome LIKE '%{$parameter}%'";
 
-        $sql = "SELECT p.*,c.nome as nomeCategoria,f.nome as nomeFornecedor FROM produtos p,categorias c,fornecedores f WHERE p.idCategoria=c.id AND p.idFornecedor=f.id AND $filtroWHERE";
+        $sql = "SELECT p.*,c.nome as nomeCategoria,f.nome as nomeFornecedor FROM produtos p,categorias c,fornecedores f WHERE p.idCategoria=c.id AND p.idFornecedor=f.id $filtroWHERE";
 
         $stmt = DB::prepare($sql);
         $stmt->execute();
