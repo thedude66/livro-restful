@@ -1,0 +1,71 @@
+
+
+<h2>Produtos</h2>
+
+<div class="input-append">
+    <input class="input-xxlarge " id="filtrar" type="text" placeholder="Nome do produto">
+    <button id="btnBuscar" class="btn" type="button">Filtrar</button>
+    <button id="btnNovo" class="btn btn-primary" type="button">Novo</button>
+</div>
+
+<div>
+    <table id="tableProdutos" class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th width="10"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="">Mark</a></td>
+                <td>Otto</td>
+                <td><a href="#"><i class="icon-trash"></i></a></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="modal fade" id="novoModal" style="display: none;">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>Produto</h3>
+        </div>
+        <div class="modal-body">
+
+            <div id="saveMessage" class="alert alert-success" style="display:none">
+                <img src="img/ajax-loader.gif"> Salvando dados...
+            </div>
+
+            <form id="form" class="form-horizontal">
+                <input type="hidden" id="inputId">
+                <input type="hidden" id="inputIdUsuario">
+
+                <div id="errorEmpty" class="alert alert-error" style="display:none">
+                    Campos requeridos
+                </div>
+
+                <div id="errorServer" class="alert alert-error" style="display:none"></div>
+
+
+                <div class="control-group">
+                    <label class="control-label" for="inputNome">Nome</label>
+                    <div class="controls">
+                        <input type="text" id="inputNome" placeholder="Nome" class="input-block-level">
+                    </div>
+                </div>
+
+                
+
+            
+             
+            </form>
+            
+        </div>
+        <div class="modal-footer">
+            <a id="salvar" href="#" class="btn btn-primary">Salvar</a>
+        </div>
+    </div>
+
+
