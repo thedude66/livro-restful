@@ -60,7 +60,7 @@ class Usuario {
                 $sql = "SELECT u.nome,u.email,u.login,DATE_FORMAT(u.lastLogin, '%d/%m/%Y %h:%m:%s') as lastLogin,u.lastIp,u.tipo,v.cpf,v.matricula,DATE_FORMAT(v.dataContratacao, '%d/%m/%Y') AS dataContratacao FROM usuarios u, vendedores v WHERE u.id=:id and u.id = v.idUsuario";
                 break;
             case "c":
-                $sql = "SELECT u.nome,u.email,u.login,u.lastLogin,u.lastIp,c.cpf FROM usuarios u, clientes c WHERE id=:id and u.id = c.idUsuario";
+                $sql = "SELECT u.nome,u.email,u.login,u.lastLogin,u.lastIp,c.cpf,u.tipo FROM usuarios u, clientes c WHERE u.id=:id and u.id = c.idUsuario";
                 break;
             default:
                 break;
