@@ -2,7 +2,6 @@
 $(document).ready(function() {
     verifyLogin();
     atualizaGrid();
-    preparaData($("#inputContratacao"));
 });
 $('#btnNovo').click(function() {
 
@@ -48,23 +47,21 @@ $('#salvar').click(function() {
     {
         travarFormulario();
 
-        vendedor = JSON.stringify({
-            idVendedor: $("#inputId").val(),
+        cliente = JSON.stringify({
+            idCliente: $("#inputId").val(),
             idUsuario: $("#inputIdUsuario").val(),
             nome: $("#inputNome").val(),
             email: $("#inputEmail").val(),
             login: $("#inputLogin").val(),
             senha: $("#inputSenha").val(),
-            cpf: $("#inputCpf").val(),
-            matricula: $("#inputMatricula").val(),
-            dataContratacao: $("#inputContratacao").val(),
+            cpf: $("#inputCpf").val()
         });
 
         $.ajax({
             type: "post",
-            url: rootUrl + "vendedor/save",
+            url: rootUrl + "cliente/save",
             dataType: "json",
-            data: vendedor,
+            data: cliente,
             success: function(result) {
                 destravarFormulario();
                 $('#novoModal').modal('hide');
@@ -108,8 +105,9 @@ function destravarFormulario()
 
 function atualizaGrid()
 {
-    $("#tableVendedores").find("tbody tr").remove();
-    $("#tableVendedores").find("tbody").append('<tr><td colspan=10><div class="alert alert-success"><img src="img/ajax-loader.gif">Carregando...</div></td></tr>')
+    
+    $("#tableClientes").find("tbody tr").remove();
+    $("#tableClientes").find("tbody").append('<tr><td colspan=10><div class="alert alert-success"><img src="img/ajax-loader.gif">Carregando...</div></td></tr>');
 
     filtro = "";
     if ($("#filtrar").val())
@@ -117,19 +115,18 @@ function atualizaGrid()
 
     $.ajax({
         type: "get",
-        url: rootUrl + "vendedor/listAll" + filtro,
+        url: rootUrl + "cliente/listAll" + filtro,
         dataType: "json",
         success: function(data) {
-            $("#tableVendedores").find("tbody tr").remove();
-            data.result.forEach(function(vendedor) {
+            $("#tableClientes").find("tbody tr").remove();
+            data.result.forEach(function(cliente) {
 
-                $row = "<tr><td>" + vendedor.matricula
-                        + "</td><td><a id='edit' href='#' data-id='" + vendedor.id + "'>" + vendedor.nome + "</a>"
-                        + "</td><td>" + vendedor.login
-                        + "</td><td>" + vendedor.dataContratacao
-                        + "</td><td> <a href='#'><i class='icon-remove' data-idUsuario='" + vendedor.idUsuario + "' data-id='" + vendedor.id + "' data-nome='" + vendedor.nome + "'/></i></a>"
+                $row = "<tr>"
+                        + "<td><a id='edit' href='#' data-id='" + cliente.id + "'>" + cliente.nome + "</a>"
+                        + "</td><td>" + cliente.login
+                        + "</td><td> <a href='#'><i class='icon-remove' data-idUsuario='" + cliente.idUsuario + "' data-id='" + cliente.id + "' data-nome='" + cliente.nome + "'/></i></a>"
                         + "</td></tr>";
-                $("#tableVendedores > tbody:last").append($row);
+                $("#tableClientes > tbody:last").append($row);
             });
         }
     });
@@ -146,7 +143,7 @@ $(".icon-remove").live("click", function() {
 
         $.ajax({
             type: "post",
-            url: rootUrl + "vendedor/delete",
+            url: rootUrl + "cliente/delete",
             dataType: "json",
             data: JSON.stringify({id: id, idUsuario: idUsuario}),
             success: function() {
@@ -172,20 +169,18 @@ $("#edit").live("click", function() {
 
     $.ajax({
         type: "get",
-        url: rootUrl + "vendedor/list/" + id,
+        url: rootUrl + "cliente/list/" + id,
         dataType: "json",
         success: function(data) {
 
-            vendedor = data.result;
-            $("#inputId").val(vendedor.id);
-            $("#inputIdUsuario").val(vendedor.idUsuario);
-            $("#inputNome").val(vendedor.nome);
-            $("#inputEmail").val(vendedor.email);
-            $("#inputLogin").val(vendedor.login);
-            $("#inputSenha").val(vendedor.senha);
-            $("#inputCpf").val(vendedor.cpf);
-            $("#inputMatricula").val(vendedor.matricula);
-            $("#inputContratacao").val(vendedor.dataContratacao);
+            cliente = data.result;
+            $("#inputId").val(cliente.id);
+            $("#inputIdUsuario").val(cliente.idUsuario);
+            $("#inputNome").val(cliente.nome);
+            $("#inputEmail").val(cliente.email);
+            $("#inputLogin").val(cliente.login);
+            $("#inputSenha").val(cliente.senha);
+            $("#inputCpf").val(cliente.cpf);
             $("#novoModal").modal("show");
         }
     });
