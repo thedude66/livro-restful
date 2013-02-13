@@ -5,7 +5,16 @@
 <div class="input-append">
     <input class="input-xxlarge " id="filtrar" type="text" placeholder="Nome do produto">
     <button id="btnBuscar" class="btn" type="button">Filtrar</button>
+
+
+    <div class="btn-group pull-right">
+        <button id="btnCategoria" class="btn" type="button">Categorias</button> 
+        <button id="btnFornecedor" class="btn" type="button">Fornecedores</button>
+    </div>
+
     <button id="btnNovo" class="btn btn-primary" type="button">Novo</button>
+
+
 </div>
 
 <div>
@@ -28,6 +37,7 @@
             </tr>
         </tbody>
     </table>
+
 
 
     <div class="modal fade" id="novoModal" style="display: none;">
@@ -96,14 +106,42 @@
                         <textarea id="inputDescricao" class="input-block-level" rows="3"></textarea>
                     </div>
                 </div>
-
-
-
-
             </form>
         </div>
         <div class="modal-footer">
             <a id="salvar" href="#" class="btn btn-primary">Salvar</a>
+        </div>
+    </div>
+
+
+    <!-- Modal Categoria -->
+    <div class="modal fade" id="categoriaModal" style="display: none;">
+
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>Categorias</h3>
+            <span>Clique na categoria para editá-la</span>
+        </div>
+
+        <div class="modal-body">
+
+
+
+            <div id="saveMessage" class="alert alert-success" style="display:none">
+                <img src="img/ajax-loader.gif"> Salvando dados...
+            </div>
+
+            <div id="listCategorias"><img src="img/ajax-loader.gif"></div>
+
+        </div>
+        <div class="modal-footer">
+            <form class="form-inline pull-left">
+                <input id="hiddenCategoriaId" type="hidden" />
+                <input id="inputCategoriaNome" type="text" class="input-large" placeholder="Categoria">
+                <button type="button" class="btn btn-primary">Salvar</button>
+                <a id="linkNovaCategoria" href="#">Nova Categoria</a>
+            </form>
+            <a data-dismiss="modal" href="#" class="btn btn-inverse">Fechar</a>
         </div>
     </div>
 

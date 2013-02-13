@@ -122,13 +122,13 @@ function atualizaGrid()
             $("#tableVendedores").find("tbody tr").remove();
             data.result.forEach(function(vendedor) {
 
-                $row = "<tr><td>" + vendedor.matricula
+                row = "<tr><td>" + vendedor.matricula
                         + "</td><td><a id='edit' href='#' data-id='" + vendedor.id + "'>" + vendedor.nome + "</a>"
                         + "</td><td>" + vendedor.login
                         + "</td><td>" + vendedor.dataContratacao
                         + "</td><td> <a href='#'><i class='icon-remove' data-idUsuario='" + vendedor.idUsuario + "' data-id='" + vendedor.id + "' data-nome='" + vendedor.nome + "'/></i></a>"
                         + "</td></tr>";
-                $("#tableVendedores > tbody:last").append($row);
+                $("#tableVendedores > tbody:last").append(row);
             });
         }
     });
@@ -139,7 +139,7 @@ $(".icon-remove").live("click", function() {
     id = $(this).attr("data-id");
     idUsuario = $(this).attr("data-idUsuario");
     nome = $(this).attr("data-nome");
-    $row = $(this);
+    row = $(this);
     if (confirm("Excluir " + nome + "?"))
     {
 
@@ -149,8 +149,8 @@ $(".icon-remove").live("click", function() {
             dataType: "json",
             data: JSON.stringify({id: id, idUsuario: idUsuario}),
             success: function() {
-                $row.parent().parent().parent().fadeTo(400, 0, function() {
-                    $row.parent().parent().parent().remove();
+                row.parent().parent().parent().fadeTo(400, 0, function() {
+                    row.parent().parent().parent().remove();
                 });
             },
             error: function() {

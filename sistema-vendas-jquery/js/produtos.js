@@ -115,12 +115,12 @@ function atualizaGrid()
             $("#tableProdutos").find("tbody tr").remove();
             data.result.forEach(function(produto) {
 
-                $row = "<tr>"
+                row = "<tr>"
                         + "<td><a id='edit' href='#' data-id='" + produto.id + "'>" + produto.nome + "</a>"
                         + "</td><td>" + produto.nomeCategoria
                         + "</td><td> <a href='#'><i class='icon-remove' data-id='" + produto.id + "' data-nome='" + produto.nome + "'/></i></a>"
                         + "</td></tr>";
-                $("#tableProdutos > tbody:last").append($row);
+                $("#tableProdutos > tbody:last").append(row);
             });
         },
         error: function(result)
@@ -136,7 +136,7 @@ function atualizaGrid()
 $(".icon-remove").live("click", function() {
     id = $(this).attr("data-id");
     nome = $(this).attr("data-nome");
-    $row = $(this);
+    row = $(this);
     if (confirm("Excluir " + nome + "?"))
     {
 
@@ -146,8 +146,8 @@ $(".icon-remove").live("click", function() {
             dataType: "json",
             data: JSON.stringify({id: id}),
             success: function() {
-                $row.parent().parent().parent().fadeTo(400, 0, function() {
-                    $row.parent().parent().parent().remove();
+                row.parent().parent().parent().fadeTo(400, 0, function() {
+                    row.parent().parent().parent().remove();
                 });
             },
             error: function() {
@@ -208,11 +208,21 @@ function loadCategorias() {
         success: function(data) {
             selectFornecedor = $("#selectCategoria");
             selectFornecedor.find('option').remove().end();
+            
+            $("#listCategorias").html("");
+            
+            
 
-            for (i = 0; i < data.result.length; i++) {
-                row = data.result[i];
-                selectFornecedor.append('<option value="' + row.id + '">' + row.nome + '</option>');
-            }
+           data.result.forEach(function(categoria){
+
+                //adiciona dados no dropdown de categorias
+                selectFornecedor.append('<option value="' + categoria.id + '">' + categoria.nome + '</option>');
+                
+                //adiciona dados na tabela de categorias
+                row = "<a href='#' data-id='"+categoria.id+"' class='categoriaEdit label label-success'>"+categoria.nome+"</a>&nbsp;&nbsp;";
+                $("#listCategorias").append(row);
+                
+            });
 
         },
         error: function(result) {
@@ -232,10 +242,9 @@ function loadFornecedores() {
             selectFornecedor = $("#selectFornecedor");
             selectFornecedor.find('option').remove().end();
 
-            for (i = 0; i < data.result.length; i++) {
-                row = data.result[i];
+            data.result.forEach(function(row){
                 selectFornecedor.append('<option value="' + row.id + '">' + row.nome + '</option>');
-            }
+            });
 
         },
         error: function(result) {
@@ -244,3 +253,18 @@ function loadFornecedores() {
         }
     });
 }
+
+$("#modalCategoriasFechar").click(function(){
+    $("#categoriaModal").modal('hide');
+});
+
+$("#btnCategoria").click(function(){
+    $("#categoriaModal").modal('show');
+    
+});
+
+$(".categoriaEdit").live("click",function(){
+    console.log($(this).attr("data-id"));
+    $("#hiddenCategoriaId").val($(this).attr("data-id"));
+    $("#inputCategoriaNome").val($(this).html());
+});

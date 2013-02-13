@@ -120,12 +120,12 @@ function atualizaGrid()
             $("#tableClientes").find("tbody tr").remove();
             data.result.forEach(function(cliente) {
 
-                $row = "<tr>"
+                row = "<tr>"
                         + "<td><a id='edit' href='#' data-id='" + cliente.id + "'>" + cliente.nome + "</a>"
                         + "</td><td>" + cliente.login
                         + "</td><td> <a href='#'><i class='icon-remove' data-idUsuario='" + cliente.idUsuario + "' data-id='" + cliente.id + "' data-nome='" + cliente.nome + "'/></i></a>"
                         + "</td></tr>";
-                $("#tableClientes > tbody:last").append($row);
+                $("#tableClientes > tbody:last").append(row);
             });
         }
     });
@@ -136,7 +136,7 @@ $(".icon-remove").live("click", function() {
     id = $(this).attr("data-id");
     idUsuario = $(this).attr("data-idUsuario");
     nome = $(this).attr("data-nome");
-    $row = $(this);
+    row = $(this);
     if (confirm("Excluir " + nome + "?"))
     {
 
@@ -146,8 +146,8 @@ $(".icon-remove").live("click", function() {
             dataType: "json",
             data: JSON.stringify({id: id, idUsuario: idUsuario}),
             success: function() {
-                $row.parent().parent().parent().fadeTo(400, 0, function() {
-                    $row.parent().parent().parent().remove();
+                row.parent().parent().parent().fadeTo(400, 0, function() {
+                    row.parent().parent().parent().remove();
                 });
             },
             error: function() {
