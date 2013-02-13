@@ -109,5 +109,12 @@ class DB {
     {
          return implode("/",array_reverse(explode("-",$date)));
     }
+    
+    public static function decimalToMySql($value)
+    {
+        $value = str_replace(".","",$value);
+        $value = str_replace(",",".",$value);
+        return $value;
+    }
 
 }
