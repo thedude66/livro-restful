@@ -4,6 +4,9 @@ class Produto {
 
     public function post_save($produto) {
 
+        
+        
+        
         $sqlSave="";
         //TODO: foto -> Blob
         if ($produto->idProduto) {
@@ -12,18 +15,21 @@ class Produto {
         } else {
 
             //insert
-            $sqlSave = "INSERT INTO produtos (idCategoria,idFornecedor,nome,quantidade,precoUnitario,descricao,ativo) VALUES (:idCategoria,:idFornecedor,:nome,:quantidade,:precoUnitario,:descricao,:ativo)";
+            $sqlSave = "INSERT INTO produtos (idCategoria,idFornecedor,nome,quantidade,quantidadeMinima,precoUnitario,descricao,ativo) VALUES (:idCategoria,:idFornecedor,:nome,:quantidade,:quantidadeMinima,:precoUnitario,:descricao,:ativo)";
         }
 
         $stmtProduto = DB::prepare($sqlSave);
-        $stmtProduto->bindParam("idCategooria", $produto->idCategoria);
+        $stmtProduto->bindParam("idCategoria", $produto->idCategoria);
         $stmtProduto->bindParam("idFornecedor", $produto->idFornecedor);
         $stmtProduto->bindParam("nome", $produto->nome);
         $stmtProduto->bindParam("quantidade", $produto->quantidade);
         $stmtProduto->bindParam("quantidadeMinima", $produto->quantidadeMinima);
-        $stmtProduto->bindParam("precoUnitario", $produto->precoUnitario);
+        $stmtProduto->bindParam("precoUnitario", DB::decimalToMySql($produto->precoUnitario));
         $stmtProduto->bindParam("descricao", $produto->descricao);
         $stmtProduto->bindParam("ativo", $produto->ativo);
+        
+        if ($produto->idProduto)
+            $stmtProduto->bindParam("idProduto", $produto->idProduto);
 
         $stmtProduto->execute();
 

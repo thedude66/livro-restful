@@ -2,6 +2,9 @@
 $(document).ready(function() {
     verifyLogin();
     atualizaGrid();
+    loadCategorias();
+    loadFornecedores();
+
 });
 $('#btnNovo').click(function() {
 
@@ -9,7 +12,10 @@ $('#btnNovo').click(function() {
         $("form")[0].reset();
         $("#inputId").val("");
         $("#errorServer").hide();
+         $("input[name=checkAtivo]").attr("checked",true);
     }
+    
+    
     $('#novoModal').modal('show');
 });
 
@@ -41,7 +47,7 @@ $('#salvar').click(function() {
             quantidadeMinima: $("#inputQuantidadeMinima").val(),
             precoUnitario: $("#inputPrecoUnitario").val(),
             descricao: $("#inputDescricao").val(),
-            ativo: $("#checkAtivo").val(),
+            ativo: $('input[name=checkAtivo]').is(':checked'),
             idCategoria: $("#selectCategoria").val(),
             idFornecedor: $("#selectFornecedor").val()
         });
@@ -166,6 +172,7 @@ $("#edit").live("click", function() {
         dataType: "json",
         success: function(data) {
 
+            
             produto = data.result;
             $("#inputId").val(produto.id);
             $("#inputNome").val(produto.nome);
@@ -173,10 +180,11 @@ $("#edit").live("click", function() {
             $("#inputQuantidadeMinima").val(produto.quantidadeMinima);
             $("#inputPrecoUnitario").val(produto.precoUnitario);
             $("#inputDescricao").val(produto.descricao);
-            $("#checkAivo").val(produto.ativo);
+            $("input[name=checkAtivo]").attr("checked",produto.ativo==0?false:true);
             $("#selectCategoria").val(produto.idCategoria);
             $("#selectFornecedor").val(produto.idFornecedor);
 
+            $("#inputPrecoUnitario").maskMoney('mask');
 
             $("#novoModal").modal("show");
         },
@@ -188,4 +196,51 @@ $("#edit").live("click", function() {
     });
 
 
-});    
+});
+
+
+function loadCategorias() {
+
+    $.ajax({
+        type: "get",
+        dataType: "json",
+        url: rootUrl + "categoria/listAll",
+        success: function(data) {
+            selectFornecedor = $("#selectCategoria");
+            selectFornecedor.find('option').remove().end();
+
+            for (i = 0; i < data.result.length; i++) {
+                row = data.result[i];
+                selectFornecedor.append('<option value="' + row.id + '">' + row.nome + '</option>');
+            }
+
+        },
+        error: function(result) {
+            $("#errorLoad").html(getErrorMessage(result.responseText));
+            $("#errorLoad").show();
+        }
+    });
+
+}
+
+function loadFornecedores() {
+    $.ajax({
+        type: "get",
+        dataType: "json",
+        url: rootUrl + "fornecedor/listAll",
+        success: function(data) {
+            selectFornecedor = $("#selectFornecedor");
+            selectFornecedor.find('option').remove().end();
+
+            for (i = 0; i < data.result.length; i++) {
+                row = data.result[i];
+                selectFornecedor.append('<option value="' + row.id + '">' + row.nome + '</option>');
+            }
+
+        },
+        error: function(result) {
+            $("#errorLoad").html(getErrorMessage(result.responseText));
+            $("#errorLoad").show();
+        }
+    });
+}
