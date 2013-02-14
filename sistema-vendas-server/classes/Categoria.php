@@ -2,8 +2,30 @@
 
 class Categoria {
 
-    public function post_save() {
-
+    public function post_save($data) {
+        
+        $sql = "";
+        if ($data->id == 0)
+        {
+            //insert
+            $sql = "INSERT INTO categorias (nome) VALUES (:nome)";
+        }
+        else
+        {
+            //update
+            $sql = "UPDATE categorias SET nome=:nome WHERE id=:id";
+        }
+        
+        $stmt = DB::prepare($sql);
+        $stmt->bindParam("nome", $data->nome);
+        
+        if ($data->id!=0)
+            $stmt->bindParam ("id", $data->id);
+                
+        $stmt->execute();
+        
+        return $data;
+        
     }
 
     function get_list($id) {

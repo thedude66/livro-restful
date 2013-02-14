@@ -12,10 +12,10 @@ $('#btnNovo').click(function() {
         $("form")[0].reset();
         $("#inputId").val("");
         $("#errorServer").hide();
-         $("input[name=checkAtivo]").attr("checked",true);
+        $("input[name=checkAtivo]").attr("checked", true);
     }
-    
-    
+
+
     $('#novoModal').modal('show');
 });
 
@@ -172,7 +172,7 @@ $("#edit").live("click", function() {
         dataType: "json",
         success: function(data) {
 
-            
+
             produto = data.result;
             $("#inputId").val(produto.id);
             $("#inputNome").val(produto.nome);
@@ -180,7 +180,7 @@ $("#edit").live("click", function() {
             $("#inputQuantidadeMinima").val(produto.quantidadeMinima);
             $("#inputPrecoUnitario").val(produto.precoUnitario);
             $("#inputDescricao").val(produto.descricao);
-            $("input[name=checkAtivo]").attr("checked",produto.ativo==0?false:true);
+            $("input[name=checkAtivo]").attr("checked", produto.ativo == 0 ? false : true);
             $("#selectCategoria").val(produto.idCategoria);
             $("#selectFornecedor").val(produto.idFornecedor);
 
@@ -201,6 +201,8 @@ $("#edit").live("click", function() {
 
 function loadCategorias() {
 
+    $("#listCategorias").html('<img src="img/ajax-loader.gif">');
+
     $.ajax({
         type: "get",
         dataType: "json",
@@ -208,20 +210,20 @@ function loadCategorias() {
         success: function(data) {
             selectFornecedor = $("#selectCategoria");
             selectFornecedor.find('option').remove().end();
-            
-            $("#listCategorias").html("");
-            
-            
 
-           data.result.forEach(function(categoria){
+            $("#listCategorias").html("");
+
+
+
+            data.result.forEach(function(categoria) {
 
                 //adiciona dados no dropdown de categorias
                 selectFornecedor.append('<option value="' + categoria.id + '">' + categoria.nome + '</option>');
-                
+
                 //adiciona dados na tabela de categorias
-                row = "<a href='#' data-id='"+categoria.id+"' class='categoriaEdit label label-success'>"+categoria.nome+"</a>&nbsp;&nbsp;";
+                row = "<a href='#' data-id='" + categoria.id + "' class='categoriaEdit label label-success'>" + categoria.nome + "</a>&nbsp;&nbsp;";
                 $("#listCategorias").append(row);
-                
+
             });
 
         },
@@ -242,7 +244,7 @@ function loadFornecedores() {
             selectFornecedor = $("#selectFornecedor");
             selectFornecedor.find('option').remove().end();
 
-            data.result.forEach(function(row){
+            data.result.forEach(function(row) {
                 selectFornecedor.append('<option value="' + row.id + '">' + row.nome + '</option>');
             });
 
@@ -254,17 +256,64 @@ function loadFornecedores() {
     });
 }
 
-$("#modalCategoriasFechar").click(function(){
+$("#modalCategoriasFechar").click(function() {
     $("#categoriaModal").modal('hide');
 });
 
-$("#btnCategoria").click(function(){
+$("#btnCategoria").click(function() {
     $("#categoriaModal").modal('show');
-    
+
 });
 
-$(".categoriaEdit").live("click",function(){
-    console.log($(this).attr("data-id"));
+$(".categoriaEdit").live("click", function() {
+    resetLabelCategorias();
+    $(this).removeClass("label-success").addClass("label-important");
     $("#hiddenCategoriaId").val($(this).attr("data-id"));
     $("#inputCategoriaNome").val($(this).html());
 });
+
+$("#linkNovaCategoria").click(function() {
+    resetLabelCategorias();
+    $("#hiddenCategoriaId").val(0);
+    $("#inputCategoriaNome").val("");
+});
+
+$("#btnSalvarCategoria").click(function() {
+
+    if ($("#inputCategoriaNome").val().length > 0) {
+
+        $("#errorlistCategorias").hide();
+        
+        $("#listCategorias").html('<img src="img/ajax-loader.gif">');        
+
+        data = JSON.stringify({id: $("#hiddenCategoriaId").val(), nome: $("#inputCategoriaNome").val()});
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: data,
+            url: rootUrl + "categoria/save",
+            success: function(data) {
+                loadCategorias();
+                $("#hiddenCategoriaId").val(0);
+                $("#inputCategoriaNome").val("");
+            },
+            error: function(result) {
+                $("#errorlistCategorias").html(getErrorMessage(result.responseText));
+                $("#errorlistCategorias").show();
+            }
+        });
+
+    } else {
+        $("#errorlistCategorias").html("Campo em branco");
+        $("#errorlistCategorias").show();
+    }
+
+});
+
+function resetLabelCategorias()
+{
+    $(".categoriaEdit").map(function(){
+        $(this).removeClass("label-important").addClass("label-success");
+    })
+}

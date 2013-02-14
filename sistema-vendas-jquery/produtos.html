@@ -125,20 +125,20 @@
 
         <div class="modal-body">
 
-
-
             <div id="saveMessage" class="alert alert-success" style="display:none">
                 <img src="img/ajax-loader.gif"> Salvando dados...
             </div>
 
-            <div id="listCategorias"><img src="img/ajax-loader.gif"></div>
+            <div id="listCategorias"></div>
+            <br/>
+            <div id="errorlistCategorias" class="alert alert-error" style="display:none"></div>
 
         </div>
         <div class="modal-footer">
             <form class="form-inline pull-left">
                 <input id="hiddenCategoriaId" type="hidden" />
                 <input id="inputCategoriaNome" type="text" class="input-large" placeholder="Categoria">
-                <button type="button" class="btn btn-primary">Salvar</button>
+                <button id="btnSalvarCategoria" type="button" class="btn btn-primary">Salvar</button>
                 <a id="linkNovaCategoria" href="#">Nova Categoria</a>
             </form>
             <a data-dismiss="modal" href="#" class="btn btn-inverse">Fechar</a>
