@@ -13,8 +13,8 @@
     <button id="btnNovo" class="btn btn-primary" type="button">Novo</button>
 </div>
 
- <button id="btnCategoria" class="btn pull-right" type="button">Categorias</button> 
-        <button id="btnFornecedor" class="btn pull-right" type="button">Fornecedores</button>
+<button id="btnCategoria" class="btn pull-right" type="button">Categorias</button> 
+<button id="btnFornecedor" class="btn pull-right" type="button">Fornecedores</button>
 
 <div>
 
@@ -50,7 +50,7 @@
                 <img src="img/ajax-loader.gif"> Salvando dados...
             </div>
 
-            <form id="form" class="form-horizontal">
+            <form id="form" class="form-horizontal well">
                 <input type="hidden" id="inputId">
                 <input type="hidden" id="inputIdUsuario">
 
@@ -129,21 +129,22 @@
             <div id="loadCategoria" class="alert alert-success" style="display:none">
                 <img src="img/ajax-loader.gif"> Aguarde...
             </div>
-            
-            
+
+
 
             <div id="listCategorias"></div>
             <br/>
             <div id="errorlistCategorias" class="alert alert-error" style="display:none"></div>
 
-        </div>
-        <div class="modal-footer">
-            <form class="form-inline pull-left">
+            <form class="form-horizontal well">
                 <input id="hiddenCategoriaId" type="hidden" value="0"/>
                 <input id="inputCategoriaNome" type="text" class="input-large" placeholder="Categoria">
                 <button id="btnSalvarCategoria" type="button" class="btn btn-primary">Salvar</button>
                 <a id="linkNovaCategoria" href="#">Nova Categoria</a>
             </form>
+
+        </div>
+        <div class="modal-footer">
             <a data-dismiss="modal" href="#" class="btn btn-inverse">Fechar</a>
         </div>
     </div>
@@ -154,6 +155,7 @@
         <div class="modal-header">
             <a class="close" data-dismiss="modal">&times;</a>
             <h3>Fornecedores</h3>
+            <span>Escolha um fornecedor abaixo para editá-lo</span>
         </div>
 
         <div class="modal-body">
@@ -164,19 +166,19 @@
 
             <div id="errorFornecedor" class="alert alert-error" style="display:none"></div>
 
-            <div>Escolha um fornecedor abaixo para editá-lo</div>
-            <form id="form" class="form-vertical">
+           
+            <form id="form" class="form-vertical well">
                 <input type="hidden" id="inputId">
                 <input type="hidden" id="inputIdUsuario">
 
-                
+
                 <select id="selectFornecedor2" class="input-block-level"></select>
 
 
                 <hr/>
 
                 <input type="hidden" id="hiddenIdFornecedor" value="0"/>
-                <input type="text" id="inputNomeFornecedor" class="span4" placeholder="Fornecedor">
+                <input type="text" id="inputNomeFornecedor" class="span3" placeholder="Fornecedor">
                 <input type="text" id="inputCnpjFornecedor" class="span3" placeholder="Cnpj">
 
             </form>
