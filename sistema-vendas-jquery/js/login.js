@@ -54,7 +54,7 @@ function onSuccessLogin(data) {
     $("#erroLoginEmpty").hide();
 
     $.cookie.json = true;
-    $.cookie('usuario', data.result, {expires: 7});
+    $.cookie('usuario', data.result, {expires: 1});
 
     goPage("bemVindo");
 
