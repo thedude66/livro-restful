@@ -79,7 +79,7 @@ else {
                                     echo "<li " . getActive('vendedores') . "><a href='index.php?go=vendedores'>Vendedores</a></li>";
                                     echo "<li " . getActive('clientes') . "><a href='index.php?go=clientes'>Clientes</a></li>";
                                     echo "<li " . getActive('produtos') . "><a href='index.php?go=produtos'>Produtos</a></li>";
-                                    echo "<li " . getActive('vendas') . "><a href='index.php?go=vendas'>Vendas</a></li>";
+                                    echo "<li " . getActive('vendasAdmin') . "><a href='index.php?go=vendasAdmin'>Vendas</a></li>";
                                 }
                             }
                             ?>
