@@ -1,19 +1,20 @@
 
+<style type="text/css">
+    .categoriaEdit{
+        margin-left:2px;
+    }
+</style>
 
 <h2>Produtos</h2>
 
 <div class="input-append">
     <input class="input-xxlarge " id="filtrar" type="text" placeholder="Nome do produto">
     <button id="btnBuscar" class="btn" type="button">Filtrar</button>
-
-
-    <div class="btn-group pull-right">
-        <button id="btnCategoria" class="btn" type="button">Categorias</button> 
-        <button id="btnFornecedor" class="btn" type="button">Fornecedores</button>
-    </div>
-
     <button id="btnNovo" class="btn btn-primary" type="button">Novo</button>
 </div>
+
+ <button id="btnCategoria" class="btn pull-right" type="button">Categorias</button> 
+        <button id="btnFornecedor" class="btn pull-right" type="button">Fornecedores</button>
 
 <div>
 
@@ -125,9 +126,11 @@
 
         <div class="modal-body">
 
-            <div id="saveMessage" class="alert alert-success" style="display:none">
-                <img src="img/ajax-loader.gif"> Salvando dados...
+            <div id="loadCategoria" class="alert alert-success" style="display:none">
+                <img src="img/ajax-loader.gif"> Aguarde...
             </div>
+            
+            
 
             <div id="listCategorias"></div>
             <br/>

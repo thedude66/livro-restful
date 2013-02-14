@@ -26,7 +26,8 @@ else {
         <title>Sistema Vendas</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/bootstrap.metro.min.css" rel="stylesheet"/>
+        <!--<link href="css/bootstrap.min.css" rel="stylesheet"/>-->
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet"/>
         <link href="css/base/jquery-ui.css" rel="stylesheet"/>
 
@@ -40,16 +41,16 @@ else {
     </head>
     <body>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-inverse">
             <div class="navbar-inner">
-                <div class="container">
+                <div class="container" style="width:auto">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
                     <a class="brand" href="#">Sistema Vendas</a>
-                    <div class="nav-collapse collapse">
+                    <div class="nav-collapse">
                         <ul class="nav">
 
                             <?php

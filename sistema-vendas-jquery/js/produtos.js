@@ -201,7 +201,8 @@ $("#edit").live("click", function() {
 
 function loadCategorias() {
 
-    $("#listCategorias").html('<img src="img/ajax-loader.gif">');
+    $("#listCategorias").html("");
+    $("#loadCategoria").show();
 
     $.ajax({
         type: "get",
@@ -211,9 +212,7 @@ function loadCategorias() {
             selectFornecedor = $("#selectCategoria");
             selectFornecedor.find('option').remove().end();
 
-            $("#listCategorias").html("");
-
-
+            $("#loadCategoria").hide();
 
             data.result.forEach(function(categoria) {
 
@@ -221,7 +220,7 @@ function loadCategorias() {
                 selectFornecedor.append('<option value="' + categoria.id + '">' + categoria.nome + '</option>');
 
                 //adiciona dados na tabela de categorias
-                row = "<a href='#' data-id='" + categoria.id + "' class='categoriaEdit label label-success'>" + categoria.nome + "</a>&nbsp;&nbsp;";
+                row = "<a href='#' data-id='" + categoria.id + "' data-nome='" + categoria.nome + "' class='categoriaEdit'><span class='badge badge-success'>" + categoria.nome + "</span></a>";
                 $("#listCategorias").append(row);
 
             });
@@ -273,9 +272,9 @@ $("#btnFornecedor, #btnFornecedor2").click(function() {
 
 $(".categoriaEdit").live("click", function() {
     resetLabelCategorias();
-    $(this).removeClass("label-success").addClass("label-important");
+    $(this).find("span").removeClass("label-success").addClass("label-important");
     $("#hiddenCategoriaId").val($(this).attr("data-id"));
-    $("#inputCategoriaNome").val($(this).html());
+    $("#inputCategoriaNome").val($(this).attr("data-nome"));
 });
 
 $("#linkNovaCategoria").click(function() {
@@ -295,8 +294,10 @@ $("#btnSalvarCategoria").click(function() {
     if ($("#inputCategoriaNome").val().length > 0) {
 
         $("#errorlistCategorias").hide();
+        
+        $("#listCategorias").html("");
 
-        $("#listCategorias").html('<img src="img/ajax-loader.gif">');
+        $("#loadCategoria").show();
 
         data = JSON.stringify({id: $("#hiddenCategoriaId").val(), nome: $("#inputCategoriaNome").val()});
 
@@ -326,7 +327,7 @@ $("#btnSalvarCategoria").click(function() {
 function resetLabelCategorias()
 {
     $(".categoriaEdit").map(function() {
-        $(this).removeClass("label-important").addClass("label-success");
+        $(this).find("span").removeClass("badge-important").addClass("badge-success");
     })
 }
 
