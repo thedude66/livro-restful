@@ -81,6 +81,12 @@ else {
                                     echo "<li " . getActive('produtos') . "><a href='index.php?go=produtos'>Produtos</a></li>";
                                     echo "<li " . getActive('vendasAdmin') . "><a href='index.php?go=vendasAdmin'>Vendas</a></li>";
                                 }
+                                 if ($usuario->tipo == "v") {
+                                    echo "<li " . getActive('bemVindo') . "><a href='index.php?go=bemVindo'>Home</a></li>";
+                                    echo "<li " . getActive('clientes') . "><a href='index.php?go=clientes'>Clientes</a></li>";
+                                    echo "<li " . getActive('produtos') . "><a href='index.php?go=produtos'>Produtos</a></li>";
+                                    echo "<li " . getActive('pdv') . "><a href='index.php?go=pdv'>PDV</a></li>";
+                                }
                             }
                             ?>
 
