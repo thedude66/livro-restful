@@ -271,14 +271,14 @@ $("#btnFornecedor, #btnFornecedor2").click(function() {
 });
 
 $(".categoriaEdit").live("click", function() {
-    resetLabelCategorias();
-    $(this).find("span").removeClass("label-success").addClass("label-important");
+    resetBadgeCategorias();
+    $(this).find("span").removeClass("badge-success").addClass("badge-important");
     $("#hiddenCategoriaId").val($(this).attr("data-id"));
     $("#inputCategoriaNome").val($(this).attr("data-nome"));
 });
 
 $("#linkNovaCategoria").click(function() {
-    resetLabelCategorias();
+    resetBadgeCategorias();
     $("#hiddenCategoriaId").val(0);
     $("#inputCategoriaNome").val("");
 });
@@ -324,11 +324,11 @@ $("#btnSalvarCategoria").click(function() {
 
 });
 
-function resetLabelCategorias()
+function resetBadgeCategorias()
 {
     $(".categoriaEdit").map(function() {
         $(this).find("span").removeClass("badge-important").addClass("badge-success");
-    })
+    });
 }
 
 
