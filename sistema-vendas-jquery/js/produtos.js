@@ -260,9 +260,8 @@ $("#modalCategoriasFechar").click(function() {
     $("#categoriaModal").modal('hide');
 });
 
-$("#btnCategoria").click(function() {
+$("#btnCategoria, #btnCategoria2").click(function() {
     $("#categoriaModal").modal('show');
-
 });
 
 $(".categoriaEdit").live("click", function() {
