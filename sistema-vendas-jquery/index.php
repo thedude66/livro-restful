@@ -98,11 +98,11 @@ else {
             <?php require($_GET["go"] . ".html") ?>
         </div> <!-- /container -->
 
-        <script src="js/jquery.js" type="text/javascript"></script>
-        <script src="js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="js/jquery.cookie.js" type="text/javascript"></script>
-        <script src="js/jquery.maskMoney.js" type="text/javascript"></script>        
+        <script src="js/libs/jquery.js" type="text/javascript"></script>
+        <script src="js/libs/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
+        <script src="js/libs/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/libs/jquery.cookie.js" type="text/javascript"></script>
+        <script src="js/libs/jquery.maskMoney.js" type="text/javascript"></script>        
         <script src="js/app.js" type="text/javascript"></script>
         
         <!-- toda página tem o seu arquivo JS relativo -->
