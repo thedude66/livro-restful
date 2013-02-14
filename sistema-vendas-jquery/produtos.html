@@ -13,8 +13,6 @@
     </div>
 
     <button id="btnNovo" class="btn btn-primary" type="button">Novo</button>
-
-
 </div>
 
 <div>
@@ -80,7 +78,8 @@
                 <div class="control-group">
                     <label class="control-label" for="selectFornecedor">Fornecedor</label>
                     <div class="controls">
-                        <select id="selectFornecedor" class="input-block-level"></select>
+                        <select id="selectFornecedor" class="input-xlarge"></select>
+                        <input id="btnFornecedor2" type="button" value="+"/>
                     </div>
                 </div>
 
@@ -137,11 +136,55 @@
         </div>
         <div class="modal-footer">
             <form class="form-inline pull-left">
-                <input id="hiddenCategoriaId" type="hidden" />
+                <input id="hiddenCategoriaId" type="hidden" value="0"/>
                 <input id="inputCategoriaNome" type="text" class="input-large" placeholder="Categoria">
                 <button id="btnSalvarCategoria" type="button" class="btn btn-primary">Salvar</button>
                 <a id="linkNovaCategoria" href="#">Nova Categoria</a>
             </form>
+            <a data-dismiss="modal" href="#" class="btn btn-inverse">Fechar</a>
+        </div>
+    </div>
+
+    <!-- Modal Fornecdor -->
+    <div class="modal fade" id="fornecedorModal" style="display: none;">
+
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>Fornecedores</h3>
+        </div>
+
+        <div class="modal-body">
+
+            <div id="loadFornecedor" class="alert alert-success" style="display:none">
+                <img src="img/ajax-loader.gif"> Aguarde...
+            </div>
+
+            <div id="errorFornecedor" class="alert alert-error" style="display:none"></div>
+
+            <div>Escolha um fornecedor abaixo para editá-lo</div>
+            <form id="form" class="form-vertical">
+                <input type="hidden" id="inputId">
+                <input type="hidden" id="inputIdUsuario">
+
+                
+                <select id="selectFornecedor2" class="input-block-level"></select>
+
+
+                <hr/>
+
+                <input type="hidden" id="hiddenIdFornecedor" value="0"/>
+                <input type="text" id="inputNomeFornecedor" class="span4" placeholder="Fornecedor">
+                <input type="text" id="inputCnpjFornecedor" class="span3" placeholder="Cnpj">
+
+            </form>
+
+
+        </div>
+        <div class="modal-footer">
+            <div class="pull-left">
+                <button id="btnSalvarFornecedor" type="button" class="btn btn-primary">Salvar</button>
+                <a id="linkNovoFornecedor" href="#">Novo</a>
+            </div>
             <a data-dismiss="modal" href="#" class="btn btn-inverse">Fechar</a>
         </div>
     </div>

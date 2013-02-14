@@ -236,6 +236,8 @@ function loadCategorias() {
 }
 
 function loadFornecedores() {
+
+
     $.ajax({
         type: "get",
         dataType: "json",
@@ -244,8 +246,12 @@ function loadFornecedores() {
             selectFornecedor = $("#selectFornecedor");
             selectFornecedor.find('option').remove().end();
 
+            selectFornecedor2 = $("#selectFornecedor2");
+            selectFornecedor2.find('option').remove().end();
+
             data.result.forEach(function(row) {
                 selectFornecedor.append('<option value="' + row.id + '">' + row.nome + '</option>');
+                selectFornecedor2.append('<option value="' + row.id + '">' + row.nome + '</option>');
             });
 
         },
@@ -256,12 +262,13 @@ function loadFornecedores() {
     });
 }
 
-$("#modalCategoriasFechar").click(function() {
-    $("#categoriaModal").modal('hide');
-});
 
 $("#btnCategoria, #btnCategoria2").click(function() {
     $("#categoriaModal").modal('show');
+});
+
+$("#btnFornecedor, #btnFornecedor2").click(function() {
+    $("#fornecedorModal").modal('show');
 });
 
 $(".categoriaEdit").live("click", function() {
@@ -277,13 +284,19 @@ $("#linkNovaCategoria").click(function() {
     $("#inputCategoriaNome").val("");
 });
 
+$("#linkNovoFornecedor").click(function() {
+    $("#hiddenIdFornecedor").val(0);
+    $("#inputNomeFornecedor").val("");
+    $("#inputCnpjFornecedor").val("");
+});
+
 $("#btnSalvarCategoria").click(function() {
 
     if ($("#inputCategoriaNome").val().length > 0) {
 
         $("#errorlistCategorias").hide();
-        
-        $("#listCategorias").html('<img src="img/ajax-loader.gif">');        
+
+        $("#listCategorias").html('<img src="img/ajax-loader.gif">');
 
         data = JSON.stringify({id: $("#hiddenCategoriaId").val(), nome: $("#inputCategoriaNome").val()});
 
@@ -312,7 +325,64 @@ $("#btnSalvarCategoria").click(function() {
 
 function resetLabelCategorias()
 {
-    $(".categoriaEdit").map(function(){
+    $(".categoriaEdit").map(function() {
         $(this).removeClass("label-important").addClass("label-success");
     })
 }
+
+
+$("#btnSalvarFornecedor").click(function() {
+
+    if ($("#inputNomeFornecedor").val().length > 0) {
+
+        $("#errorFornecedor").hide();
+        $("#loadFornecedor").show();
+
+        data = JSON.stringify({id: $("#hiddenIdFornecedor").val(), nome: $("#inputNomeFornecedor").val(), cnpj: $("#inputCnpjFornecedor").val()});
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: data,
+            url: rootUrl + "fornecedor/save",
+            success: function(data) {
+                $("#loadFornecedor").hide();
+                $("#hiddenFornecedorId").val(0);
+                $("#inputNomeFornecedor").val("");
+                $("#inputCnpjFornecedor").val("");
+                loadFornecedores();
+            },
+            error: function(result) {
+                $("#loadFornecedor").hide();
+                $("#errorFornecedor").html(getErrorMessage(result.responseText));
+                $("#errorFornecedor").show();
+            }
+        });
+
+    } else {
+        $("#errorFornecedor").html("Campo nome é requerido");
+        $("#errorFornecedor").show();
+    }
+
+});
+
+$("#selectFornecedor2").change(function() {
+    $("#loadFornecedor").show();
+    $.ajax({
+        type: "get",
+        url: rootUrl + "fornecedor/list/" + $("#selectFornecedor2").val(),
+        dataType: "json",
+        success: function(data) {
+            fornecedor = data.result;
+            $("#hiddenIdFornecedor").val(fornecedor.id);
+            $("#inputNomeFornecedor").val(fornecedor.nome);
+            $("#inputCnpjFornecedor").val(fornecedor.cnpj);
+            $("#loadFornecedor").hide();
+        },
+        error: function(result) {
+            $("#loadFornecedor").hide();
+            $("#errorFornecedor").html(getErrorMessage(result.responseText));
+            $("#errorFornecedor").show();
+        }
+    })
+})
