@@ -3,7 +3,7 @@
 $(document).ready(function() {
 
     $.ajax({
-        type: "get",
+        type: "post",
         url: rootUrl + "usuario/perfil",
         dataType: "json",
         success: function(data) {

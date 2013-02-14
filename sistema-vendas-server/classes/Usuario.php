@@ -37,7 +37,7 @@ class Usuario {
             throw new Exception("Erro ao efetuar login. Usuário/Senha incorretos");
     }
 
-    public function get_perfil() {
+    public function post_perfil() {
         
         if (!$this->get_isLogged())
             throw new Exception("Ninguém logado");

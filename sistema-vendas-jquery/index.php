@@ -12,6 +12,7 @@
  * HTMl e a parte JavaScript no mesmo arquivo, para facilitar
  * 
  */
+session_start();
 if (isset($_GET["go"])) {
     if (!file_exists($_GET["go"] . ".html"))
         $_GET["go"] = "login";
@@ -71,6 +72,13 @@ else {
                             if (isset($_COOKIE['usuario'])) {
                                 $usuario = json_decode($_COOKIE['usuario']);
                                 $mensagemUsuario = "Olá {$usuario->nome} [ <a id='linkPerfil' href='index.php?go=perfil' class='navbar-link'>Perfil</a> - <a id='linkSair' href='#' class='navbar-link'>Sair</a> ] ";
+                                
+                                if (!isset($_SESSION["login_id"]))
+                                {
+                                    $_SESSION["login_id"] = $usuario->id;
+                                    $_SESSION["login_tipo"] = $usuario->tipo;
+                                }
+                                
                             }
 
                             if (isset($usuario)) {
