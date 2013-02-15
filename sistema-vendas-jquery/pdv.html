@@ -30,13 +30,13 @@
             <input id="inputNomeCliente" type="text" class="span4" placeholder="Nome"/>
             <input id="inputCpfCliente" type="text" class="span3" placeholder="Cpf"/>
             <input id="hiddenIdCliente" type="hidden"/>
-            <button id="btnNovoCliente" class="btn btn-primary">Novo</button>
+            <button id="btnNovoCliente" class="btn btn-primary pull-right">Novo</button>
             <div id="errorNewCliente" class="alert alert-error" style="display:none"></div>
         </div>
     </div>
     <div id="newClienteload" style="display: none"><img src="img/ajax-loader.gif"></div>
     <div id="okCliente" class="span1" style="margin-top:30px;display: none">
-       <img src="img/check2.png"/>
+        <img src="img/check2.png"/>
     </div>
 </div>
 
@@ -57,7 +57,7 @@
         </form>
     </div>
     <div id="okData" class="span1" style="margin-top:30px;display: none">
-       <img src="img/check2.png"/>
+        <img src="img/check2.png"/>
     </div>
 </div>
 
@@ -66,16 +66,21 @@
         <span class="badge badge-inverse">Adicionar Produto</span>
         <div class="form-search well">
             <div>
-
-                <a href="#" class="btn btn-primary"><i class="icon-search icon-white"></i></a>
-                <input type="text" class="span1" placeholder="cod"/>
-                ou
-                <input type="text" class="span5" placeholder="nome"/>
-                <input type="number" value="1" class="input-medium span1" placeholder="QTDE"/>
-                <a href="#" class="btn btn-primary pull-right">+</a>
+                <a id="btnModalBuscarProduto"  href="#" class="btn btn-primary"><i class="icon-search icon-white"></i></a>
+                <input id="inputCodigoProduto" type="text" class="span1" placeholder="cod"/>
+                <input id="inputNomeProduto" type="text" class="span4" placeholder="nome"/>
+                <input id="hiddenIdProduto" type="hidden" value="0"/>
+                <input id="hiddenPrecoProduto" type="hidden" value="0"/>
+                <input id="inputQuantidadeProduto" type="number" value="1" class="input-medium span1" placeholder="QTDE"/>
+                <span id="spanPrecoProduto"></span>
+                <a id="btnAdcionarProduto" href="#" class="btn btn-primary pull-right">+</a>
             </div>
+            <div id="errorProduto" class="alert alert-error" style="display:none"></div>
         </div>
 
+    </div>
+    <div id="okProduto" class="span1" style="margin-top:30px;display: none">
+        <img src="img/check2.png"/>
     </div>
 
 </div>
@@ -84,17 +89,9 @@
 <div class="row">
     <div class="span9">
         <span class="badge badge-inverse">Produtos Adicionados</span>
-        <div class="well">
+        <div class="itensProduto well">
 
-            <div class="alert alert-success">
-                <a class="close">×</a>
-                <strong>Produto xyz</strong> 35 unidades <span class="pull-right">R$ 13,00</span>
-            </div>
-
-            <div class="alert alert-success">
-                <a class="close">×</a>
-                <strong>Produto xyz</strong> 35 unidades <span class="pull-right">R$ 13,00</span>
-            </div>
+            
         </div>
     </div>
 
@@ -131,7 +128,7 @@
             <div id="buscaClienteload" style="display: none"><img src="img/ajax-loader.gif"></div>
             <div id="errorLoadCliente" class="alert alert-error" style="display:none"></div>
             <ul id="itemResultadoBusca" class="nav nav-tabs nav-stacked">
-                
+
             </ul> 
         </div>
 
@@ -140,6 +137,40 @@
         <div class="pull-left">
             <a id="btnBuscarCliente" href="#" class="btn btn-primary search-query">Buscar</a>
             <a id="btnNovoCliente" href="#" class="btn disabled">Criar novo cliente</a>
+        </div>
+        <a data-dismiss="modal" href="#" class="btn btn-inverse">Fechar</a>
+    </div>
+</div>
+
+
+<!-- Modal Produto -->
+<div class="modal fade" id="produtoModal" style="display: none;">
+
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>Buscar Produto</h3>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="well">
+            <div class="control-group">
+                <input id="inputBuscarProduto" type="text" placeholder="Nome ou Código" class="input-block-level"/>
+            </div>
+        </div>
+
+        <div id="resultadoBusca">
+            <div id="buscaProdutoload" style="display: none"><img src="img/ajax-loader.gif"></div>
+            <div id="errorLoadProduto" class="alert alert-error" style="display:none"></div>
+            <ul id="itemResultadoBuscaProduto" class="nav nav-tabs nav-stacked">
+
+            </ul> 
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="pull-left">
+            <a id="btnBuscarProduto" href="#" class="btn btn-primary search-query">Buscar</a>
         </div>
         <a data-dismiss="modal" href="#" class="btn btn-inverse">Fechar</a>
     </div>

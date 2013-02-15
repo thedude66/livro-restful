@@ -4,10 +4,7 @@ class Produto {
 
     public function post_save($produto) {
 
-        
-        
-        
-        $sqlSave="";
+        $sqlSave = "";
         //TODO: foto -> Blob
         if ($produto->idProduto) {
             //update
@@ -27,7 +24,7 @@ class Produto {
         $stmtProduto->bindParam("precoUnitario", DB::decimalToMySql($produto->precoUnitario));
         $stmtProduto->bindParam("descricao", $produto->descricao);
         $stmtProduto->bindParam("ativo", $produto->ativo);
-        
+
         if ($produto->idProduto)
             $stmtProduto->bindParam("idProduto", $produto->idProduto);
 
@@ -66,13 +63,21 @@ class Produto {
 
     function post_delete($produto) {
         $sqlDeleteProduto = "DELETE FROM produtos WHERE id=:id";
-        
-            $stmt = DB::prepare($sqlDeleteProduto);
-            $stmt->bindParam("id", $produto->id);
-            $stmt->execute();
 
-            return true;
-        
+        $stmt = DB::prepare($sqlDeleteProduto);
+        $stmt->bindParam("id", $produto->id);
+        $stmt->execute();
+
+        return true;
+    }
+
+    function post_search($data) {
+        $data->busca = "%{$data->busca}%";
+        $sql = "SELECT * FROM produtos WHERE (nome LIKE :busca)";
+        $stmt = DB::prepare($sql);
+        $stmt->bindParam("busca", $data->busca);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
 }
