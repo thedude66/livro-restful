@@ -153,5 +153,28 @@ class Cliente {
             throw new Exception($exc->getMessage());
         }
     }
+    
+    function post_search($data)
+    {
+        $data->busca = "%{$data->busca}%";
+        $sql = "SELECT c.id,u.nome,u.email,u.login,c.cpf,u.id as idUsuario FROM usuarios u, clientes c WHERE u.id=c.idUsuario AND (u.nome LIKE :busca OR c.cpf LIKE :busca)";
+        $stmt = DB::prepare($sql);
+        $stmt->bindParam("busca", $data->busca);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    
+    function post_newFromVendas($cliente)
+    {
+        $letters = 'abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $rand = substr(str_shuffle($letters), 0, 5);
+   
+        $cliente->idCliente = null;
+        $cliente->login = $rand;
+        $cliente->senha = $rand;
+        $cliente->email = "preencher";
+        
+        return $this->post_save($cliente); 
+    }
 
 }

@@ -67,8 +67,20 @@ $(document).ready(function() {
 
     });
 
-    $(".moeda").maskMoney({thousands:'.', decimal:','});
-    
+    $(".moeda").maskMoney({thousands: '.', decimal: ','});
+
+    /*
+    Previne que um enter poste o formulário
+    Em ambientes jquery e ajax, enter 
+     submetendo formulários não são bem vndos
+    */
+    $(window).keydown(function(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
 
 });
 

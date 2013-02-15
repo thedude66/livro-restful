@@ -5,6 +5,14 @@
         font-weight: bold;
         font-size: 16pt;
     }
+
+    .alert{
+        margin-bottom: 1px;
+    }
+
+    #resultadoBusca{
+        margin: 10px;
+    }
 </style>
 
 <a href="#" class="btn btn-large  pull-right">Nova venda</a>
@@ -18,30 +26,38 @@
     <div class="span9">
         <span class="badge badge-inverse">Cliente</span>
         <div class="form-search well">
-            <a href="#" class="btn btn-primary"><i class="icon-search icon-white"></i></a>
-            <input type="text" class="input-xxlarge"/>
-            <a href="#" class="btn btn-primary">Novo</a>
+            <a id="btnModalBuscarCliente" href="#" class="btn btn-primary"><i class="icon-search icon-white"></i></a>
+            <input id="inputNomeCliente" type="text" class="span4" placeholder="Nome"/>
+            <input id="inputCpfCliente" type="text" class="span3" placeholder="Cpf"/>
+            <input id="hiddenIdCliente" type="hidden"/>
+            <button id="btnNovoCliente" class="btn btn-primary">Novo</button>
+            <div id="errorNewCliente" class="alert alert-error" style="display:none"></div>
         </div>
     </div>
-    <div class="span2 alert alert-info ">
-        Para criar um novo cliente, preencha
-        o nome e clique em novo. 
+    <div id="newClienteload" style="display: none"><img src="img/ajax-loader.gif"></div>
+    <div id="okCliente" class="span1" style="margin-top:30px;display: none">
+       <img src="img/check2.png"/>
     </div>
 </div>
+
+
 
 <div class="row">
     <div class="span6">
         <span class="badge badge-inverse">vendedor</span>
         <div class="form-search well">
-            <a href="#" class="btn btn-primary"><i class="icon-search icon-white"></i></a>
-            <span>Fulano de tal</span>
+            <input id="hiddenIdVendedor" type="hidden"/>
+            <span id="nomeVendedor"></span>
         </div>
     </div>
     <div class="span3">
         <span class="badge badge-inverse">data</span>
         <form class="form-search well">
-            <input type="text" class="input-block-level"/>
+            <input id="inputData" type="text" class="input-block-level"/>
         </form>
+    </div>
+    <div id="okData" class="span1" style="margin-top:30px;display: none">
+       <img src="img/check2.png"/>
     </div>
 </div>
 
@@ -55,7 +71,7 @@
                 <input type="text" class="span1" placeholder="cod"/>
                 ou
                 <input type="text" class="span5" placeholder="nome"/>
-                <input type="number" class="input-medium span1" placeholder="QTDE"/>
+                <input type="number" value="1" class="input-medium span1" placeholder="QTDE"/>
                 <a href="#" class="btn btn-primary pull-right">+</a>
             </div>
         </div>
@@ -68,7 +84,7 @@
 <div class="row">
     <div class="span9">
         <span class="badge badge-inverse">Produtos Adicionados</span>
-        <div style="margin-top: 5px">
+        <div class="well">
 
             <div class="alert alert-success">
                 <a class="close">×</a>
@@ -81,7 +97,7 @@
             </div>
         </div>
     </div>
-   
+
 </div>
 
 <div class="row">
@@ -93,6 +109,41 @@
     </div>
 </div>
 
+
+
+<!-- Modal Cliente -->
+<div class="modal fade" id="clienteModal" style="display: none;">
+
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>Buscar Cliente</h3>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="well">
+            <div class="control-group">
+                <input id="inputBuscarCliente" type="text" placeholder="Nome ou CPF" class="input-block-level"/>
+            </div>
+        </div>
+
+        <div id="resultadoBusca">
+            <div id="buscaClienteload" style="display: none"><img src="img/ajax-loader.gif"></div>
+            <div id="errorLoadCliente" class="alert alert-error" style="display:none"></div>
+            <ul id="itemResultadoBusca" class="nav nav-tabs nav-stacked">
+                
+            </ul> 
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="pull-left">
+            <a id="btnBuscarCliente" href="#" class="btn btn-primary search-query">Buscar</a>
+            <a id="btnNovoCliente" href="#" class="btn disabled">Criar novo cliente</a>
+        </div>
+        <a data-dismiss="modal" href="#" class="btn btn-inverse">Fechar</a>
+    </div>
+</div>
 
 
 
