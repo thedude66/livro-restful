@@ -275,6 +275,6 @@ function verificaFinalizarVenda() {
 }
 
 $("#btnFinalizarVenda").click(function(){
-    //testando branch 2 commit 2
+    
 });
 
