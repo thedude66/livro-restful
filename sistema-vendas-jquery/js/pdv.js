@@ -24,10 +24,10 @@ $("#btnModalBuscarCliente").click(function() {
 });
 
 $("#btnModalBuscarProduto").click(function() {
-    
+
     $(".itemProduto").parent().removeClass("alert-danger").addClass("alert-success");
     $("#errorProduto").hide();
-    
+
     $("#produtoModal").modal("show");
 
     if ($("#inputNomeProduto").val().length > 0)
@@ -126,6 +126,8 @@ $(".itemClienteResult").live("click", function() {
     $("#okCliente").show();
 
     $("#clienteModal").modal("hide");
+    
+    verificaFinalizarVenda();
 });
 
 $(".itemProdutoResult").live("click", function() {
@@ -144,10 +146,13 @@ $(".itemProdutoResult").live("click", function() {
     $("#errorProduto").hide();
 
     $("#produtoModal").modal("hide");
+    
+    verificaFinalizarVenda();
 });
 
 $("#inputData").change(function() {
     $("#okData").show();
+    verificaFinalizarVenda();
 });
 
 $("#btnNovoCliente").click(function() {
@@ -170,6 +175,7 @@ $("#btnNovoCliente").click(function() {
                 $("#inputCpfCliente").attr('disabled', 'disabled');
                 $("#btnNovoCliente").addClass("disabled").removeClass("btn-primary");
                 $("#okCliente").show();
+                verificaFinalizarVenda();
 
             },
             error: function(result) {
@@ -251,7 +257,24 @@ function calculaTotal() {
     });
 
     $(".totalValue").html($total);
+    
+    verificaFinalizarVenda();
+
 }
 
+function verificaFinalizarVenda() {
+    //Verificamos se o botão finalizar venda pode ser acionado
+    if ($(".totalValue").html() > 0 && $("#hiddenIdCliente").val() > 0 && $("#hiddenIdVendedor").val() > 0 && $("#inputData").val().length > 0)
+    {
+        $("#btnFinalizarVenda").removeAttr("disabled");
+    }
+    else
+    {
+        $("#btnFinalizarVenda").attr("disabled","disabled");
+    }
+}
 
+$("#btnFinalizarVenda").click(function(){
+    alert("venda");
+});
 

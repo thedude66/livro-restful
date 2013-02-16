@@ -29,7 +29,7 @@
             <a id="btnModalBuscarCliente" href="#" class="btn btn-primary"><i class="icon-search icon-white"></i></a>
             <input id="inputNomeCliente" type="text" class="span4" placeholder="Nome"/>
             <input id="inputCpfCliente" type="text" class="span3" placeholder="Cpf"/>
-            <input id="hiddenIdCliente" type="hidden"/>
+            <input id="hiddenIdCliente" type="hidden" value="0"/>
             <button id="btnNovoCliente" class="btn btn-primary pull-right">Novo</button>
             <div id="errorNewCliente" class="alert alert-error" style="display:none"></div>
         </div>
@@ -99,7 +99,7 @@
 
 <div class="row">
     <div class="span7">
-        <a href="#" class="btn btn-large btn-primary">Finalizar Venda</a>
+        <input type="button" id="btnFinalizarVenda" class="btn btn-large btn-primary" value="Finalizar Venda" disabled/>
     </div>
     <div class="span2">
         <div class="alert alert-success">Total:<br/><span class="totalValue">0,00</span></div>
