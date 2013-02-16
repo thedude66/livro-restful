@@ -275,6 +275,6 @@ function verificaFinalizarVenda() {
 }
 
 $("#btnFinalizarVenda").click(function(){
-    alert("venda");
+    //testando branch
 });
 
