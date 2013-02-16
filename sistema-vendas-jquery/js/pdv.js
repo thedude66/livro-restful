@@ -259,6 +259,8 @@ function calculaTotal() {
     $(".totalValue").html($total);
     
     verificaFinalizarVenda();
+    
+    //teste branch master
 
 }
 
