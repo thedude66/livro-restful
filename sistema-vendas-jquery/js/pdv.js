@@ -278,5 +278,6 @@ function verificaFinalizarVenda() {
 
 $("#btnFinalizarVenda").click(function(){
     //testando branch
+    //master
 });
 
