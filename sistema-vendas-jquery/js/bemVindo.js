@@ -1,1 +1,6 @@
 
+
+$(document).ready(function() {
+    verifyLogin();
+});
+
