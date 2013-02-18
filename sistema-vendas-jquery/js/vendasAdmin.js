@@ -17,14 +17,14 @@ function atualizaGrid() {
         success: function(data) {
             $("#tableVendas").find("tbody tr").remove();
             data.result.forEach(function(venda) {
-
+                
                 row = "<tr>"
                         + "<td><a id='edit' data-id='" + venda.id + "' href='#'><i class='icon-info-sign'></i></a></td>"
                         + "</td><td>" + venda.dataVenda + "</td>"
                         + "</td><td>" + venda.nomeVendedor + "</td>"
                         + "</td><td>" + venda.nomeCliente + "</td>"
                         + "</tr>";
-                $("#tableClientes > tbody:last").append(row);
+                $("#tableVendas > tbody:last").append(row);
             });
             
         },
