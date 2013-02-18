@@ -7,7 +7,7 @@ $(document).ready(function() {
     $.cookie.json = true;
     usuario = $.cookie('usuario');
     $("#nomeVendedor").html(usuario.nome);
-    $("#hiddenIdVendedor").val(usuario.id);
+    $("#hiddenIdVendedor").val(usuario.idVendedor);
 
     preparaData($("#inputData"));
 
