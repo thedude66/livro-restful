@@ -27,6 +27,17 @@ class Usuario {
         $stmt->execute();
 
         $db_usuario = $stmt->fetch();
+        
+        //se for vendedor, pega o idVendedor tb
+        if ($db_usuario->tipo = "v")
+        {
+            $sqlVendedor = "SELECT * from vendedores WHERE idUsuario=:id";
+            $stmtVendedor = DB::prepare($sqlVendedor);
+            $stmtVendedor->bindParam("id", $db_usuario->id);
+            $stmtVendedor->execute();
+            $db_vendedor = $stmtVendedor->fetch();
+            $db_usuario->idVendedor = $db_vendedor->id;
+        }
 
         if ($db_usuario != null) {
             $this->doLogin($db_usuario);
