@@ -356,3 +356,7 @@ function reiniciaVenda() {
     calculaTotal();
 }
 
+$("#btnNovaVenda").click(function(){
+    if (confirm("Iniciar uma nova venda?"))
+        reiniciaVenda();
+});
