@@ -37,5 +37,17 @@ class Venda {
         
         return $venda;
     }
+    
+    public function get_listAll(){
+        
+        $sql = "SELECT v.*,u.nome as nomeCliente,u2.nome as nomeVendedor FROM vendas v,clientes c,vendedores e, usuarios u, usuarios u2 WHERE "
+                + "u.id=c.idUsuario and c.id=v.idCliente " 
+                + "and u2.id=e.idUsuario and e.id=v.idVendedor";
+        $sql = "SELECT * FROM vendas";
+        $stmt = DB::prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+            
 
 }

@@ -21,7 +21,7 @@
         <h4>Consulta por Vendedor</h4>
         <form>
             <div class="controls">
-                <select id="inputVendedor" class="input-large"></select>
+                <select id="selectVendedor" class="input-large"></select>
             </div>
             <div>
                 <input type="button" value="Buscar" class="btn btn-info pull-right"/>
@@ -31,10 +31,10 @@
     </div>
 
     <div class="span3 well">
-        <h4>Consulta por Status</h4>
+        <h4>Consulta por Cliente</h4>
         <form>
             <div class="controls">
-                <select id="inputStatus" class="input-large"></select>
+                <select id="selectCliente" class="input-large"></select>
             </div>
             <div>
                 <input type="button" value="Buscar" class="btn btn-info pull-right"/>
@@ -43,33 +43,38 @@
 
     </div>
 
+
+
 </div>
 
 <div>
     <table id="tableVendas" class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
+                <th width="10"></th>
                 <th width="10%">Data</th>
-                <th>Status</th>
                 <th>Vendedor</th>
                 <th>Cliente</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Otto</td>
-                <td>Otto</td>
-                <td>Otto</td>
-                <td>Otto</td>
+                <td><a href=""><i class="icon-info-sign"></i></a></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
         </tbody>
     </table>
 </div>
 
+<div id="errorVenda" class="alert alert-error" style="display:none"></div>
+
 <div id="detalhes" class="">
     <h3>Detalhes</h3>
     <div class="well">
-
+        
     </div>
 </div>
 
