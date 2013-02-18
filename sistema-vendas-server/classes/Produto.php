@@ -8,11 +8,11 @@ class Produto {
         //TODO: foto -> Blob
         if ($produto->idProduto) {
             //update
-            $sqlSave = "UPDATE produtos SET idCategoria=:idCategoria,idFornecedor=:idFornecedor,nome=:nome,quantidade=:quantidade,quantidadeMinima=:quantidadeMinima,precoUnitario=:precoUnitario,descricao=:descricao,ativo=:ativo WHERE id=:idProduto";
+            $sqlSave = "UPDATE produtos SET codigo=:codigo,idCategoria=:idCategoria,idFornecedor=:idFornecedor,nome=:nome,quantidade=:quantidade,quantidadeMinima=:quantidadeMinima,precoUnitario=:precoUnitario,descricao=:descricao,ativo=:ativo WHERE id=:idProduto";
         } else {
 
             //insert
-            $sqlSave = "INSERT INTO produtos (idCategoria,idFornecedor,nome,quantidade,quantidadeMinima,precoUnitario,descricao,ativo) VALUES (:idCategoria,:idFornecedor,:nome,:quantidade,:quantidadeMinima,:precoUnitario,:descricao,:ativo)";
+            $sqlSave = "INSERT INTO produtos (codigo,idCategoria,idFornecedor,nome,quantidade,quantidadeMinima,precoUnitario,descricao,ativo) VALUES (:codigo,:idCategoria,:idFornecedor,:nome,:quantidade,:quantidadeMinima,:precoUnitario,:descricao,:ativo)";
         }
 
         $stmtProduto = DB::prepare($sqlSave);
@@ -24,6 +24,7 @@ class Produto {
         $stmtProduto->bindParam("precoUnitario", DB::decimalToMySql($produto->precoUnitario));
         $stmtProduto->bindParam("descricao", $produto->descricao);
         $stmtProduto->bindParam("ativo", $produto->ativo);
+        $stmtProduto->bindParam("codigo", $produto->codigo);
 
         if ($produto->idProduto)
             $stmtProduto->bindParam("idProduto", $produto->idProduto);

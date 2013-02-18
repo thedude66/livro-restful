@@ -35,6 +35,11 @@ $('#salvar').click(function() {
         valido = false;
         $('#inputNome').parents("div").addClass("error");
     }
+    if ($('#inputCodigo').val().length == 0)
+    {
+        valido = false;
+        $('#inputCodigo').parents("div").addClass("error");
+    }
 
     if (valido)
     {
@@ -49,7 +54,8 @@ $('#salvar').click(function() {
             descricao: $("#inputDescricao").val(),
             ativo: $('input[name=checkAtivo]').is(':checked'),
             idCategoria: $("#selectCategoria").val(),
-            idFornecedor: $("#selectFornecedor").val()
+            idFornecedor: $("#selectFornecedor").val(),
+            codigo: $("#inputCodigo").val()
         });
 
         $.ajax({
@@ -116,6 +122,7 @@ function atualizaGrid()
             data.result.forEach(function(produto) {
 
                 row = "<tr>"
+                        + "<td>" + produto.codigo + "</td>"
                         + "<td><a id='edit' href='#' data-id='" + produto.id + "'>" + produto.nome + "</a>"
                         + "</td><td>" + produto.nomeCategoria
                         + "</td><td> <a href='#'><i class='icon-remove' data-id='" + produto.id + "' data-nome='" + produto.nome + "'/></i></a>"
@@ -183,6 +190,7 @@ $("#edit").live("click", function() {
             $("input[name=checkAtivo]").attr("checked", produto.ativo == 0 ? false : true);
             $("#selectCategoria").val(produto.idCategoria);
             $("#selectFornecedor").val(produto.idFornecedor);
+            $("#inputCodigo").val(produto.codigo);
 
             $("#inputPrecoUnitario").maskMoney('mask');
 
@@ -294,7 +302,7 @@ $("#btnSalvarCategoria").click(function() {
     if ($("#inputCategoriaNome").val().length > 0) {
 
         $("#errorlistCategorias").hide();
-        
+
         $("#listCategorias").html("");
 
         $("#loadCategoria").show();
