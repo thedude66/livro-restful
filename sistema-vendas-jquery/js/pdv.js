@@ -277,8 +277,11 @@ function verificaFinalizarVenda() {
 }
 
 $("#btnFinalizarVenda").click(function() {
-    
+
     $("#errorVenda").hide();
+    
+    $("#btnFinalizarVenda").val("Aguarde...");
+    $("#btnFinalizarVenda").removeClass("btn-primary").attr("disabled","disabled");
 
     venda = new Object();
     venda.idCliente = $("#hiddenIdCliente").val();
@@ -297,18 +300,17 @@ $("#btnFinalizarVenda").click(function() {
 
     });
 
-    console.log(venda);
-
     $.ajax({
         type: "post",
         dataType: "json",
         url: rootUrl + "venda/finalizar",
         data: JSON.stringify(venda),
         success: function(data) {
-            console.log(data);
+            $("#btnFinalizarVenda").addClass("btn-primary").val("Finalizar Venda");
+            reiniciaVenda();
         },
         error: function(result) {
-            //$("#errorVenda").hide();
+
             $("#errorVenda").html(getErrorMessage(result.responseText));
             $("#errorVenda").show();
         }
@@ -317,4 +319,40 @@ $("#btnFinalizarVenda").click(function() {
 
 
 });
+
+function reiniciaVenda() {
+
+    //cliente
+    $("#hiddenIdCliente").val(0);
+    $("#inputNomeCliente").val("");
+    $("#inputCpfCliente").val("");
+    $("#inputNomeCliente").removeAttr('disabled');
+    $("#inputCpfCliente").removeAttr('disabled');
+    $("#btnNovoCliente").removeClass("disabled").addClass("btn-primary");
+    $("#okCliente").hide();
+
+    //data
+    $("#okData").hide();
+    $("#inputData").val("");
+
+    //Produto
+    $("#hiddenIdProduto").val(0);
+    $("#hiddenPrecoProduto").val(0);
+    $("#inputNomeProduto").val("");
+    $("#inputCodigoProduto").val("");
+    $("#inputQuantidadeProduto").val(1);
+    $("#inputNomeProduto").removeAttr('disabled');
+    $("#inputCodigoProduto").removeAttr('disabled');
+    $("#spanPrecoProduto").html("");
+    $("#errorProduto").hide();
+    
+    
+    //itensProduto
+    $(".itensProduto").html("");
+    
+    //venda
+     $("#errorVenda").hide();
+    
+    calculaTotal();
+}
 
