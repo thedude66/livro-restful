@@ -101,7 +101,7 @@ function buscarProduto()
             $("#buscaProdutoload").hide();
 
             data.result.forEach(function(produto) {
-                $("#itemResultadoBuscaProduto").append("<li><a class='itemProdutoResult' href='#' data-preco='" + produto.precoUnitario + "' data-nome='" + produto.nome + "' data-id=" + produto.id + " data-cpf='" + produto.codigo + "'>" + produto.nome + " - " + produto.codigo + " - " + produto.precoUnitario + "</a></li>");
+                $("#itemResultadoBuscaProduto").append("<li><a class='itemProdutoResult' href='#' data-preco='" + produto.precoUnitario + "' data-nome='" + produto.nome + "' data-id=" + produto.id + " data-cpf='" + produto.codigo + "'>" + produto.nome + " - " + produto.codigo + " - R$" + moeda(produto.precoUnitario) + "</a></li>");
             });
 
         },
@@ -136,7 +136,7 @@ $(".itemProdutoResult").live("click", function() {
     $("#inputNomeProduto").val($(this).attr("data-nome"));
     $("#inputCodigoProduto").val($(this).attr("data-codigo"));
 
-    $("#spanPrecoProduto").html("R$ " + $(this).attr("data-preco"));
+    $("#spanPrecoProduto").html("R$ " + moeda($(this).attr("data-preco")));
 
     $("#inputNomeProduto").attr('disabled', 'disabled');
     $("#inputCodigoProduto").attr('disabled', 'disabled');
@@ -218,7 +218,7 @@ $("#btnAdcionarProduto").click(function() {
         {
 
 
-            $(".itensProduto").append('<div class="alert alert-success"><a class="close">×</a><span class="itemProduto" data-id=' + $("#hiddenIdProduto").val() + ' data-quantidade=' + $("#inputQuantidadeProduto").val() + ' data-preco="' + $("#hiddenPrecoProduto").val() + '"></span><strong>' + $("#inputNomeProduto").val() + '</strong><span class="pull-right">' + $("#inputQuantidadeProduto").val() + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R$ ' + $("#hiddenPrecoProduto").val() + '</span>');
+            $(".itensProduto").append('<div class="alert alert-success"><a class="close">×</a><span class="itemProduto" data-id=' + $("#hiddenIdProduto").val() + ' data-quantidade=' + $("#inputQuantidadeProduto").val() + ' data-preco="' + $("#hiddenPrecoProduto").val() + '"></span><strong>' + $("#inputNomeProduto").val() + '</strong><span class="pull-right">' + $("#inputQuantidadeProduto").val() + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R$ ' + moeda($("#hiddenPrecoProduto").val()) + '</span>');
             $("#hiddenIdProduto").val(0);
             $("#hiddenPrecoProduto").val(0);
             $("#inputNomeProduto").val("");
@@ -250,13 +250,14 @@ $(".close").live("click", function() {
 
 function calculaTotal() {
 
-    $total = 0;
+    total = 0;
 
     $(".itemProduto").map(function() {
-        $total += $(this).attr("data-preco") * $(this).attr("data-quantidade");
+        total += $(this).attr("data-preco") * $(this).attr("data-quantidade");
     });
 
-    $(".totalValue").html($total);
+    $(".totalValue").html(moeda(total));
+    $("#hiddenTotal").val(total);
 
     verificaFinalizarVenda();
 
@@ -266,7 +267,7 @@ function calculaTotal() {
 
 function verificaFinalizarVenda() {
     //Verificamos se o botão finalizar venda pode ser acionado
-    if ($(".totalValue").html() > 0 && $("#hiddenIdCliente").val() > 0 && $("#hiddenIdVendedor").val() > 0 && $("#inputData").val().length > 0)
+    if ($("#hiddenTotal").val() > 0 && $("#hiddenIdCliente").val() > 0 && $("#hiddenIdVendedor").val() > 0 && $("#inputData").val().length > 0)
     {
         $("#btnFinalizarVenda").removeAttr("disabled");
     }

@@ -67,10 +67,10 @@ $("#edit").live("click", function() {
            total = 0;
            venda.itens.forEach(function(item){
                total += item.quantidade*item.precoUnitario;
-            $("#itens").append('<div class="alert alert-gray">' + item.nome + '</strong><span class="pull-right">' + item.quantidade + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R$ ' + item.precoUnitario + '</span>');
+            $("#itens").append('<div class="alert alert-gray">' + item.nome + '</strong><span class="pull-right">' + item.quantidade + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R$ ' + moeda(item.precoUnitario) + '</span>');
            });
            
-           $("#itens").append('<span class="alert alert-gray pull-right">Total: R$ '+total+'</span>');
+           $("#itens").append('<span class="alert alert-gray pull-right">Total: R$ '+moeda(total)+'</span>');
            
            
            
