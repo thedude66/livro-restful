@@ -2,6 +2,7 @@
 
 class Usuario {
 
+    /*
     public function post_insert($usuario) {
         $sql = "INSERT INTO usuarios (nome,email,login,senha,tipo) VALUES (:nome,:email,:login,:senha,:tipo)";
         $stmt = DB::prepare($sql);
@@ -13,40 +14,40 @@ class Usuario {
         $stmt->execute();
         $usuario->id = DB::lastInsertId();
         return $usuario;
+    }*/
+
+public function post_login($usuario) {
+
+    if ((empty($usuario->login)) or (empty($usuario->senha)))
+        throw new Exception("Login ou senha precisam ser preenchidos");
+
+    $sql = "SELECT * FROM usuarios WHERE (login=:login and senha=:senha)";
+    $stmt = DB::prepare($sql);
+    $stmt->bindParam("login", $usuario->login);
+    $stmt->bindParam("senha", $usuario->senha);
+    $stmt->execute();
+
+    $db_usuario = $stmt->fetch();
+
+    //se for vendedor, pega o idVendedor tb
+    if ($db_usuario->tipo == "v")
+    {
+        $sqlVendedor = "SELECT * from vendedores WHERE idUsuario=:id";
+        $stmtVendedor = DB::prepare($sqlVendedor);
+        $stmtVendedor->bindParam("id", $db_usuario->id);
+        $stmtVendedor->execute();
+        $db_vendedor = $stmtVendedor->fetch();
+        $db_usuario->idVendedor = $db_vendedor->id;
     }
 
-    public function post_login($usuario) {
-
-        if ((empty($usuario->login)) or (empty($usuario->senha)))
-            throw new Exception("Login ou senha precisam ser preenchidos");
-
-        $sql = "SELECT * FROM usuarios WHERE (login=:login and senha=:senha)";
-        $stmt = DB::prepare($sql);
-        $stmt->bindParam("login", $usuario->login);
-        $stmt->bindParam("senha", $usuario->senha);
-        $stmt->execute();
-
-        $db_usuario = $stmt->fetch();
-        
-        //se for vendedor, pega o idVendedor tb
-        if ($db_usuario->tipo == "v")
-        {
-            $sqlVendedor = "SELECT * from vendedores WHERE idUsuario=:id";
-            $stmtVendedor = DB::prepare($sqlVendedor);
-            $stmtVendedor->bindParam("id", $db_usuario->id);
-            $stmtVendedor->execute();
-            $db_vendedor = $stmtVendedor->fetch();
-            $db_usuario->idVendedor = $db_vendedor->id;
-        }
-
-        if ($db_usuario != null) {
-            $this->doLogin($db_usuario);
-            unset($db_usuario->senha);
-            return $db_usuario;
-        }
-        else
-            throw new Exception("Erro ao efetuar login. Usuário/Senha incorretos");
+    if ($db_usuario != null) {
+        $this->doLogin($db_usuario);
+        unset($db_usuario->senha);
+        return $db_usuario;
     }
+    else
+        throw new Exception("Erro ao efetuar login. Usuário/Senha incorretos");
+}
 
     public function post_perfil() {
         
