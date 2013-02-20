@@ -127,13 +127,18 @@ class Vendedor {
     function get_listAll($parameter) {
 
         $filtroWHERE = "";
+        $nomeLike = "%$parameter%";
 
         if ($parameter)
-            $filtroWHERE = " AND u.nome LIKE '%{$parameter}%'";
+            $filtroWHERE = " AND u.nome LIKE :nome";
 
         $sql = "SELECT v.id,u.nome,u.email,u.login,v.cpf,v.matricula,DATE_FORMAT(v.dataContratacao, '%d/%m/%Y') AS dataContratacao,u.id as idUsuario FROM usuarios u, vendedores v WHERE u.id=v.idUsuario $filtroWHERE";
 
         $stmt = DB::prepare($sql);
+        
+        if ($parameter)
+            $stmt->bindParam("nome", $nomeLike);
+        
         $stmt->execute();
 
         $result = $stmt->fetchAll();

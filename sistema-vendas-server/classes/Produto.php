@@ -49,13 +49,18 @@ class Produto {
     function get_listAll($parameter) {
 
         $filtroWHERE = "";
-
+        $nomeLike = "%$parameter%";
+        
         if ($parameter)
-            $filtroWHERE = " AND p.nome LIKE '%{$parameter}%'";
+            $filtroWHERE = " AND p.nome LIKE :nome";
 
         $sql = "SELECT p.*,c.nome as nomeCategoria,f.nome as nomeFornecedor FROM produtos p,categorias c,fornecedores f WHERE p.idCategoria=c.id AND p.idFornecedor=f.id $filtroWHERE";
 
         $stmt = DB::prepare($sql);
+        
+        if ($parameter)
+            $stmt->bindParam ("nome", $nomeLike);
+        
         $stmt->execute();
 
         $result = $stmt->fetchAll();
