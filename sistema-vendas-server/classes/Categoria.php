@@ -24,13 +24,15 @@ class Categoria {
                 
         $stmt->execute();
         
+        if ($data->id==0)
+            $data->id = DB::lastInsertId();
+        
         return $data;
         
     }
 
     function get_list($id) {
-
-
+        //todo
     }
 
     function get_listAll() {
@@ -43,7 +45,7 @@ class Categoria {
     }
 
     function post_delete() {
-        
+        //todo
     }
 
 }
