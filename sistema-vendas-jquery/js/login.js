@@ -32,19 +32,13 @@ $("#btnIr").click(function(event) {
             success: onSuccessLogin,
             error: onErrorLogin
         });
-
-
-
     }
     else
     {
         $("#erroLoginServer").hide();
         $("#erroLoginEmpty").show();
     }
-
-    event.preventDefault();
-
-
+    
 });
 
 function onSuccessLogin(data) {
