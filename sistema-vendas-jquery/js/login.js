@@ -1,12 +1,12 @@
 
 $("#btnIr").click(function(event) {
 
-    $valido = true;
+    valido = true;
 
     $("#form-login input").map(function() {
         if ($(this).val().length == 0)
         {
-            $valido = false;
+            valido = false;
             $(this).parents("div").addClass("error");
         }
         else
@@ -15,7 +15,7 @@ $("#btnIr").click(function(event) {
         }
     });
 
-    if ($valido)
+    if (valido)
     {
         $("#erroLoginEmpty").hide();
         $("#erroLoginServer").hide();
