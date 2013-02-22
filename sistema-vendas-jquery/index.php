@@ -72,13 +72,11 @@ else {
                             if (isset($_COOKIE['usuario'])) {
                                 $usuario = json_decode($_COOKIE['usuario']);
                                 $mensagemUsuario = "Olá {$usuario->nome} [ <a id='linkPerfil' href='index.php?go=perfil' class='navbar-link'>Perfil</a> - <a id='linkSair' href='#' class='navbar-link'>Sair</a> ] ";
-                                
-                                if (!isset($_SESSION["login_id"]))
-                                {
+
+                                if (!isset($_SESSION["login_id"])) {
                                     $_SESSION["login_id"] = $usuario->id;
                                     $_SESSION["login_tipo"] = $usuario->tipo;
                                 }
-                                
                             }
 
                             if (isset($usuario)) {
@@ -89,7 +87,7 @@ else {
                                     echo "<li " . getActive('produtos') . "><a href='index.php?go=produtos'>Produtos</a></li>";
                                     echo "<li " . getActive('vendasAdmin') . "><a href='index.php?go=vendasAdmin'>Vendas</a></li>";
                                 }
-                                 if ($usuario->tipo == "v") {
+                                if ($usuario->tipo == "v") {
                                     echo "<li " . getActive('bemVindo') . "><a href='index.php?go=bemVindo'>Home</a></li>";
                                     echo "<li " . getActive('clientes') . "><a href='index.php?go=clientes'>Clientes</a></li>";
                                     echo "<li " . getActive('produtos') . "><a href='index.php?go=produtos'>Produtos</a></li>";
