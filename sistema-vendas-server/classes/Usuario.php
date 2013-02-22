@@ -30,7 +30,7 @@ public function post_login($usuario) {
     $db_usuario = $stmt->fetch();
 
     //se for vendedor, pega o idVendedor tb
-    if ($db_usuario->tipo == "v")
+    if ($db_usuario && $db_usuario->tipo == "v")
     {
         $sqlVendedor = "SELECT * from vendedores WHERE idUsuario=:id";
         $stmtVendedor = DB::prepare($sqlVendedor);
