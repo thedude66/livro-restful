@@ -4,6 +4,36 @@ $(document).ready(function() {
     atualizaGrid();
     preparaData($("#inputContratacao"));
 });
+
+function atualizaGrid()
+{
+    $("#tableVendedores").find("tbody tr").remove();
+    $("#tableVendedores").find("tbody").append('<tr><td colspan=10><div class="alert alert-success"><img src="img/ajax-loader.gif">Carregando...</div></td></tr>')
+
+    filtro = "";
+    if ($("#filtrar").val())
+        filtro = "/" + $("#filtrar").val();
+
+    $.ajax({
+        type: "get",
+        url: rootUrl + "vendedor/listAll" + filtro,
+        dataType: "json",
+        success: function(data) {
+            $("#tableVendedores").find("tbody tr").remove();
+            data.result.forEach(function(vendedor) {
+
+                row = "<tr><td>" + vendedor.matricula
+                        + "</td><td><a id='edit' href='#' data-id='" + vendedor.id + "'>" + vendedor.nome + "</a>"
+                        + "</td><td>" + vendedor.login
+                        + "</td><td>" + vendedor.dataContratacao
+                        + "</td><td> <a href='#'><i class='icon-remove' data-idUsuario='" + vendedor.idUsuario + "' data-id='" + vendedor.id + "' data-nome='" + vendedor.nome + "'/></i></a>"
+                        + "</td></tr>";
+                $("#tableVendedores > tbody:last").append(row);
+            });
+        }
+    });
+}
+
 $('#btnNovo').click(function() {
 
     if ($("#inputId").val() != "") {
@@ -105,34 +135,7 @@ function destravarFormulario()
     $("#clearForm").removeClass("disabled");
 }
 
-function atualizaGrid()
-{
-    $("#tableVendedores").find("tbody tr").remove();
-    $("#tableVendedores").find("tbody").append('<tr><td colspan=10><div class="alert alert-success"><img src="img/ajax-loader.gif">Carregando...</div></td></tr>')
 
-    filtro = "";
-    if ($("#filtrar").val())
-        filtro = "/" + $("#filtrar").val();
-
-    $.ajax({
-        type: "get",
-        url: rootUrl + "vendedor/listAll" + filtro,
-        dataType: "json",
-        success: function(data) {
-            $("#tableVendedores").find("tbody tr").remove();
-            data.result.forEach(function(vendedor) {
-
-                row = "<tr><td>" + vendedor.matricula
-                        + "</td><td><a id='edit' href='#' data-id='" + vendedor.id + "'>" + vendedor.nome + "</a>"
-                        + "</td><td>" + vendedor.login
-                        + "</td><td>" + vendedor.dataContratacao
-                        + "</td><td> <a href='#'><i class='icon-remove' data-idUsuario='" + vendedor.idUsuario + "' data-id='" + vendedor.id + "' data-nome='" + vendedor.nome + "'/></i></a>"
-                        + "</td></tr>";
-                $("#tableVendedores > tbody:last").append(row);
-            });
-        }
-    });
-}
 
 
 $(".icon-remove").live("click", function() {
