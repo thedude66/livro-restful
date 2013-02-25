@@ -19,6 +19,7 @@ CREATE  TABLE IF NOT EXISTS `vendas`.`Usuarios` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
+INSERT INTO `vendas`.`Usuarios` (`nome`, `email`, `login`, `senha`, `tipo`) VALUES ('a', 'a', 'a', 'a', 'a');
 
 -- -----------------------------------------------------
 -- Table `vendas`.`Clientes`
