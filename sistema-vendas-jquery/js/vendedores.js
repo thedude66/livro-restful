@@ -34,6 +34,10 @@ function atualizaGrid()
     });
 }
 
+$('#btnBuscar').click(function() {
+    atualizaGrid();
+});
+
 $('#btnNovo').click(function() {
 
     if ($("#inputId").val() != "") {
@@ -45,9 +49,7 @@ $('#btnNovo').click(function() {
     $('#novoModal').modal('show');
 });
 
-$('#btnBuscar').click(function() {
-    atualizaGrid();
-});
+
 
 $('#salvar').click(function() {
 
