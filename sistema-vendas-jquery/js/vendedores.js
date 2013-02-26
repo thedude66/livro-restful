@@ -50,7 +50,6 @@ $('#btnNovo').click(function() {
 });
 
 
-
 $('#salvar').click(function() {
 
     var valido = true;
@@ -89,7 +88,7 @@ $('#salvar').click(function() {
             senha: $("#inputSenha").val(),
             cpf: $("#inputCpf").val(),
             matricula: $("#inputMatricula").val(),
-            dataContratacao: $("#inputContratacao").val(),
+            dataContratacao: $("#inputContratacao").val()
         });
 
         $.ajax({
@@ -118,6 +117,7 @@ $('#salvar').click(function() {
     }
 
 });
+
 function travarFormulario()
 {
     $("#errorEmpty").hide();
@@ -136,8 +136,6 @@ function destravarFormulario()
     $("#salvar").removeClass("disabled");
     $("#clearForm").removeClass("disabled");
 }
-
-
 
 
 $(".icon-remove").live("click", function() {
