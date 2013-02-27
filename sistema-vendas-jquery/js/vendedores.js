@@ -107,7 +107,6 @@ $('#salvar').click(function() {
                 $("#errorServer").html(getErrorMessage(result.responseText));
                 $("#errorServer").show();
             }
-
         });
     }
     else
@@ -191,6 +190,4 @@ $("#edit").live("click", function() {
             $("#novoModal").modal("show");
         }
     });
-
-
 });    

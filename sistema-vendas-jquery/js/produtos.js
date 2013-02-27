@@ -84,6 +84,7 @@ $('#salvar').click(function() {
     }
 
 });
+
 function travarFormulario()
 {
     $("#errorEmpty").hide();
@@ -206,7 +207,7 @@ $("#edit").live("click", function() {
 
 });
 
-
+//CATEGORIAS
 function loadCategorias() {
 
     $("#listCategorias").html("");
@@ -242,41 +243,10 @@ function loadCategorias() {
 
 }
 
-function loadFornecedores() {
-
-
-    $.ajax({
-        type: "get",
-        dataType: "json",
-        url: rootUrl + "fornecedor/listAll",
-        success: function(data) {
-            selectFornecedor = $("#selectFornecedor");
-            selectFornecedor.find('option').remove().end();
-
-            selectFornecedor2 = $("#selectFornecedor2");
-            selectFornecedor2.find('option').remove().end();
-
-            data.result.forEach(function(row) {
-                selectFornecedor.append('<option value="' + row.id + '">' + row.nome + '</option>');
-                selectFornecedor2.append('<option value="' + row.id + '">' + row.nome + '</option>');
-            });
-
-        },
-        error: function(result) {
-            $("#errorLoad").html(getErrorMessage(result.responseText));
-            $("#errorLoad").show();
-        }
-    });
-}
-
-
 $("#btnCategoria, #btnCategoria2").click(function() {
     $("#categoriaModal").modal('show');
 });
 
-$("#btnFornecedor, #btnFornecedor2").click(function() {
-    $("#fornecedorModal").modal('show');
-});
 
 $(".categoriaEdit").live("click", function() {
     resetBadgeCategorias();
@@ -291,11 +261,6 @@ $("#linkNovaCategoria").click(function() {
     $("#inputCategoriaNome").val("");
 });
 
-$("#linkNovoFornecedor").click(function() {
-    $("#hiddenIdFornecedor").val(0);
-    $("#inputNomeFornecedor").val("");
-    $("#inputCnpjFornecedor").val("");
-});
 
 $("#btnSalvarCategoria").click(function() {
 
@@ -375,6 +340,79 @@ $("#btnSalvarFornecedor").click(function() {
 
 });
 
+
+
+//Fornecedores
+function loadFornecedores() {
+    $.ajax({
+        type: "get",
+        dataType: "json",
+        url: rootUrl + "fornecedor/listAll",
+        success: function(data) {
+            selectFornecedor = $("#selectFornecedor");
+            selectFornecedor.find('option').remove().end();
+
+            selectFornecedor2 = $("#selectFornecedor2");
+            selectFornecedor2.find('option').remove().end();
+
+            data.result.forEach(function(row) {
+                selectFornecedor.append('<option value="' + row.id + '">' + row.nome + '</option>');
+                selectFornecedor2.append('<option value="' + row.id + '">' + row.nome + '</option>');
+            });
+
+        },
+        error: function(result) {
+            $("#errorLoad").html(getErrorMessage(result.responseText));
+            $("#errorLoad").show();
+        }
+    });
+}
+
+$("#btnFornecedor, #btnFornecedor2").click(function() {
+    $("#fornecedorModal").modal('show');
+});
+
+$("#linkNovoFornecedor").click(function() {
+    $("#hiddenIdFornecedor").val(0);
+    $("#inputNomeFornecedor").val("");
+    $("#inputCnpjFornecedor").val("");
+});
+
+$("#btnSalvarFornecedor").click(function() {
+
+    if ($("#inputNomeFornecedor").val().length > 0) {
+
+        $("#errorFornecedor").hide();
+        $("#loadFornecedor").show();
+
+        data = JSON.stringify({id: $("#hiddenIdFornecedor").val(), nome: $("#inputNomeFornecedor").val(), cnpj: $("#inputCnpjFornecedor").val()});
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: data,
+            url: rootUrl + "fornecedor/save",
+            success: function(data) {
+                $("#loadFornecedor").hide();
+                $("#hiddenFornecedorId").val(0);
+                $("#inputNomeFornecedor").val("");
+                $("#inputCnpjFornecedor").val("");
+                loadFornecedores();
+            },
+            error: function(result) {
+                $("#loadFornecedor").hide();
+                $("#errorFornecedor").html(getErrorMessage(result.responseText));
+                $("#errorFornecedor").show();
+            }
+        });
+
+    } else {
+        $("#errorFornecedor").html("Campo nome é requerido");
+        $("#errorFornecedor").show();
+    }
+
+});
+
 $("#selectFornecedor2").change(function() {
     $("#loadFornecedor").show();
     $.ajax({
@@ -394,4 +432,4 @@ $("#selectFornecedor2").change(function() {
             $("#errorFornecedor").show();
         }
     })
-})
+});
