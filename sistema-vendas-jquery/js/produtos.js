@@ -304,44 +304,6 @@ function resetBadgeCategorias()
     });
 }
 
-
-$("#btnSalvarFornecedor").click(function() {
-
-    if ($("#inputNomeFornecedor").val().length > 0) {
-
-        $("#errorFornecedor").hide();
-        $("#loadFornecedor").show();
-
-        data = JSON.stringify({id: $("#hiddenIdFornecedor").val(), nome: $("#inputNomeFornecedor").val(), cnpj: $("#inputCnpjFornecedor").val()});
-
-        $.ajax({
-            type: "post",
-            dataType: "json",
-            data: data,
-            url: rootUrl + "fornecedor/save",
-            success: function(data) {
-                $("#loadFornecedor").hide();
-                $("#hiddenFornecedorId").val(0);
-                $("#inputNomeFornecedor").val("");
-                $("#inputCnpjFornecedor").val("");
-                loadFornecedores();
-            },
-            error: function(result) {
-                $("#loadFornecedor").hide();
-                $("#errorFornecedor").html(getErrorMessage(result.responseText));
-                $("#errorFornecedor").show();
-            }
-        });
-
-    } else {
-        $("#errorFornecedor").html("Campo nome é requerido");
-        $("#errorFornecedor").show();
-    }
-
-});
-
-
-
 //Fornecedores
 function loadFornecedores() {
     $.ajax({
