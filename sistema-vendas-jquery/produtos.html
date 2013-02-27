@@ -41,87 +41,87 @@
 
 
 
-    <div class="modal fade" id="novoModal" style="display: none;">
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">&times;</a>
-            <h3>Produto</h3>
-        </div>
-        <div class="modal-body">
+<div class="modal fade" id="novoModal" style="display: none;">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>Produto</h3>
+    </div>
+    <div class="modal-body">
 
-            <div id="saveMessage" class="alert alert-success" style="display:none">
-                <img src="img/ajax-loader.gif"> Salvando dados...
+        <div id="saveMessage" class="alert alert-success" style="display:none">
+            <img src="img/ajax-loader.gif"> Salvando dados...
+        </div>
+
+        <form id="form" class="form-horizontal well">
+            <input type="hidden" id="inputId">
+            <input type="hidden" id="inputIdUsuario">
+
+            <div id="errorEmpty" class="alert alert-error" style="display:none">
+                Campos requeridos
             </div>
 
-            <form id="form" class="form-horizontal well">
-                <input type="hidden" id="inputId">
-                <input type="hidden" id="inputIdUsuario">
+            <div id="errorServer" class="alert alert-error" style="display:none"></div>
 
-                <div id="errorEmpty" class="alert alert-error" style="display:none">
-                    Campos requeridos
+
+            <div class="control-group">
+                <label class="control-label" for="inputNome">Nome</label>
+                <div class="controls">
+                    <input type="text" id="inputNome" class="input-block-level">
                 </div>
+            </div>
 
-                <div id="errorServer" class="alert alert-error" style="display:none"></div>
-
-
-                <div class="control-group">
-                    <label class="control-label" for="inputNome">Nome</label>
-                    <div class="controls">
-                        <input type="text" id="inputNome" class="input-block-level">
-                    </div>
+            <div class="control-group">
+                <label class="control-label" for="inputCodigo">Código</label>
+                <div class="controls">
+                    <input type="text" id="inputCodigo" class="input-block-level">
                 </div>
+            </div>
 
-                <div class="control-group">
-                    <label class="control-label" for="inputCodigo">Código</label>
-                    <div class="controls">
-                        <input type="text" id="inputCodigo" class="input-block-level">
-                    </div>
+            <div class="control-group">
+                <label class="control-label" for="selectCategoria">Categoria</label>
+                <div class="controls">
+                    <select id="selectCategoria" class="input-xlarge"></select>
+                    <input id="btnCategoria2" type="button" value="+"/>
                 </div>
+            </div>
 
-                <div class="control-group">
-                    <label class="control-label" for="selectCategoria">Categoria</label>
-                    <div class="controls">
-                        <select id="selectCategoria" class="input-xlarge"></select>
-                        <input id="btnCategoria2" type="button" value="+"/>
-                    </div>
+            <div class="control-group">
+                <label class="control-label" for="selectFornecedor">Fornecedor</label>
+                <div class="controls">
+                    <select id="selectFornecedor" class="input-xlarge"></select>
+                    <input id="btnFornecedor2" type="button" value="+"/>
                 </div>
+            </div>
 
-                <div class="control-group">
-                    <label class="control-label" for="selectFornecedor">Fornecedor</label>
-                    <div class="controls">
-                        <select id="selectFornecedor" class="input-xlarge"></select>
-                        <input id="btnFornecedor2" type="button" value="+"/>
-                    </div>
+            <div class="control-group">
+                <label class="control-label" for="inputQuantidade">Quantidade</label>
+                <div class="controls">
+                    <input type="number" id="inputQuantidade" class=" input-mini">
+                    Qtde. Mínima:
+                    <input type="number" id="inputQuantidadeMinima" class="input-mini">
+                    <input name="checkAtivo" type="checkbox" value="bar" checked/> Ativo
                 </div>
+            </div>
 
-                <div class="control-group">
-                    <label class="control-label" for="inputQuantidade">Quantidade</label>
-                    <div class="controls">
-                        <input type="number" id="inputQuantidade" class=" input-mini">
-                        Qtde. Mínima:
-                        <input type="number" id="inputQuantidadeMinima" class="input-mini">
-                        <input name="checkAtivo" type="checkbox" value="bar" checked/> Ativo
-                    </div>
+            <div class="control-group">
+                <label class="control-label" for="inputPrecoUnitario">Preço Unitário</label>
+                <div class="controls">
+                    <input type="text" id="inputPrecoUnitario" class="moeda input-small">
                 </div>
+            </div>
 
-                <div class="control-group">
-                    <label class="control-label" for="inputPrecoUnitario">Preço Unitário</label>
-                    <div class="controls">
-                        <input type="text" id="inputPrecoUnitario" class="moeda input-small">
-                    </div>
+            <div class="control-group">
+                <label class="control-label" for="inputDescricao">Descrição</label>
+                <div class="controls">
+                    <textarea id="inputDescricao" class="input-block-level" rows="3"></textarea>
                 </div>
-
-                <div class="control-group">
-                    <label class="control-label" for="inputDescricao">Descrição</label>
-                    <div class="controls">
-                        <textarea id="inputDescricao" class="input-block-level" rows="3"></textarea>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <a id="salvar" href="#" class="btn btn-primary">Salvar</a>
-        </div>
+            </div>
+        </form>
     </div>
+    <div class="modal-footer">
+        <a id="salvar" href="#" class="btn btn-primary">Salvar</a>
+    </div>
+</div>
 
 
     <!-- Modal Categoria -->
