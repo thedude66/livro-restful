@@ -14,14 +14,15 @@ class Produto {
             //insert
             $sqlSave = "INSERT INTO produtos (codigo,idCategoria,idFornecedor,nome,quantidade,quantidadeMinima,precoUnitario,descricao,ativo) VALUES (:codigo,:idCategoria,:idFornecedor,:nome,:quantidade,:quantidadeMinima,:precoUnitario,:descricao,:ativo)";
         }
-
+        
+        $precoUnitario = DB::decimalToMySql($produto->precoUnitario);
         $stmtProduto = DB::prepare($sqlSave);
         $stmtProduto->bindParam("idCategoria", $produto->idCategoria);
         $stmtProduto->bindParam("idFornecedor", $produto->idFornecedor);
         $stmtProduto->bindParam("nome", $produto->nome);
         $stmtProduto->bindParam("quantidade", $produto->quantidade);
         $stmtProduto->bindParam("quantidadeMinima", $produto->quantidadeMinima);
-        $stmtProduto->bindParam("precoUnitario", DB::decimalToMySql($produto->precoUnitario));
+        $stmtProduto->bindParam("precoUnitario",$precoUnitario );
         $stmtProduto->bindParam("descricao", $produto->descricao);
         $stmtProduto->bindParam("ativo", $produto->ativo);
         $stmtProduto->bindParam("codigo", $produto->codigo);

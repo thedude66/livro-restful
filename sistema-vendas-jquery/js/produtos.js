@@ -161,7 +161,6 @@ $(".icon-remove").live("click", function() {
             }
         });
     }
-
 });
 
 $("#edit").live("click", function() {
