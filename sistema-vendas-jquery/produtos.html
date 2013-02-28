@@ -124,39 +124,37 @@
 </div>
 
 
-    <!-- Modal Categoria -->
-    <div class="modal fade" id="categoriaModal" style="display: none;">
+<!-- Modal Categoria                  -->
+<div class="modal fade" id="categoriaModal" style="display: none;">
 
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">&times;</a>
-            <h3>Categorias</h3>
-            <span>Clique na categoria para editá-la</span>
-        </div>
-
-        <div class="modal-body">
-
-            <div id="loadCategoria" class="alert alert-success" style="display:none">
-                <img src="img/ajax-loader.gif"> Aguarde...
-            </div>
-
-
-
-            <div id="listCategorias"></div>
-            <br/>
-            <div id="errorlistCategorias" class="alert alert-error" style="display:none"></div>
-
-            <form class="form-horizontal well">
-                <input id="hiddenCategoriaId" type="hidden" value="0"/>
-                <input id="inputCategoriaNome" type="text" class="input-large" placeholder="Categoria">
-                <button id="btnSalvarCategoria" type="button" class="btn btn-primary">Salvar</button>
-                <a id="linkNovaCategoria" href="#">Nova Categoria</a>
-            </form>
-
-        </div>
-        <div class="modal-footer">
-            <a data-dismiss="modal" href="#" class="btn btn-inverse">Fechar</a>
-        </div>
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>Categorias</h3>
+        <span>Clique na categoria para editá-la</span>
     </div>
+
+    <div class="modal-body">
+
+        <div id="loadCategoria" class="alert alert-success" style="display:none">
+            <img src="img/ajax-loader.gif"> Aguarde...
+        </div>
+
+        <div id="listCategorias"></div>
+        <br/>
+        <div id="errorlistCategorias" class="alert alert-error" style="display:none"></div>
+
+        <form class="form-horizontal well">
+            <input id="hiddenCategoriaId" type="hidden" value="0"/>
+            <input id="inputCategoriaNome" type="text" class="input-large" placeholder="Categoria">
+            <button id="btnSalvarCategoria" type="button" class="btn btn-primary">Salvar</button>
+            <a id="linkNovaCategoria" href="#">Nova Categoria</a>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <a data-dismiss="modal" href="#" class="btn btn-inverse">Fechar</a>
+    </div>
+</div>
 
     <!-- Modal Fornecedor -->
     <div class="modal fade" id="fornecedorModal" style="display: none;">
