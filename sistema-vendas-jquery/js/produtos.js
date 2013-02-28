@@ -139,43 +139,6 @@ function destravarFormulario()
     $("#clearForm").removeClass("disabled");
 }
 
-function atualizaGrid()
-{
-
-    $("#tableProdutos").find("tbody tr").remove();
-    $("#tableProdutos").find("tbody").append('<tr><td colspan=10><div class="alert alert-success"><img src="img/ajax-loader.gif">Carregando...</div></td></tr>');
-
-    filtro = "";
-    if ($("#filtrar").val())
-        filtro = "/" + $("#filtrar").val();
-
-    $.ajax({
-        type: "get",
-        url: rootUrl + "produto/listAll" + filtro,
-        dataType: "json",
-        success: function(data) {
-            $("#tableProdutos").find("tbody tr").remove();
-            data.result.forEach(function(produto) {
-
-                row = "<tr>"
-                        + "<td>" + produto.codigo + "</td>"
-                        + "<td><a id='edit' href='#' data-id='" + produto.id + "'>" + produto.nome + "</a>"
-                        + "</td><td>" + produto.nomeCategoria
-                        + "</td><td> <a href='#'><i class='icon-remove' data-id='" + produto.id + "' data-nome='" + produto.nome + "'/></i></a>"
-                        + "</td></tr>";
-                $("#tableProdutos > tbody:last").append(row);
-            });
-        },
-        error: function(result)
-        {
-            $("#errorLoad").html(getErrorMessage(result.responseText));
-            $("#errorLoad").show();
-            $("#tableProdutos").find("tbody tr").remove();
-        }
-    });
-}
-
-
 $(".icon-remove").live("click", function() {
     id = $(this).attr("data-id");
     nome = $(this).attr("data-nome");
