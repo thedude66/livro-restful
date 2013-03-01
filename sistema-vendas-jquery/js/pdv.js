@@ -6,6 +6,7 @@ $(document).ready(function() {
 
     $.cookie.json = true;
     usuario = $.cookie('usuario');
+
     $("#nomeVendedor").html(usuario.nome);
     $("#hiddenIdVendedor").val(usuario.idVendedor);
 
@@ -14,6 +15,8 @@ $(document).ready(function() {
 });
 
 
+
+//cliente
 $("#btnModalBuscarCliente").click(function() {
     $("#clienteModal").modal("show");
 
@@ -23,37 +26,14 @@ $("#btnModalBuscarCliente").click(function() {
     }
 });
 
-$("#btnModalBuscarProduto").click(function() {
-
-    $(".itemProduto").parent().removeClass("alert-danger").addClass("alert-success");
-    $("#errorProduto").hide();
-
-    $("#produtoModal").modal("show");
-
-    if ($("#inputNomeProduto").val().length > 0)
-    {
-        $("#inputBuscarProduto").val($("#inputNomeProduto").val());
-    }
-});
-
 $("#inputBuscarCliente").keydown(function(event) {
     if (event.keyCode == 13) {
         buscarCliente();
     }
 });
 
-$("#inputBuscarProduto").keydown(function(event) {
-    if (event.keyCode == 13) {
-        buscarProduto();
-    }
-});
-
 $("#btnBuscarCliente").click(function() {
     buscarCliente();
-});
-
-$("#btnBuscarProduto").click(function() {
-    buscarProduto();
 });
 
 function buscarCliente()
@@ -85,35 +65,6 @@ function buscarCliente()
 
 }
 
-function buscarProduto()
-{
-    $("#itemResultadoBuscaProduto").html("");
-    $("#errorLoadProduto").hide();
-    $("#buscaProdutoload").show();
-
-
-    $.ajax({
-        type: "post",
-        dataType: "json",
-        url: rootUrl + "produto/search",
-        data: JSON.stringify({busca: $("#inputBuscarProduto").val()}),
-        success: function(data) {
-            $("#buscaProdutoload").hide();
-
-            data.result.forEach(function(produto) {
-                $("#itemResultadoBuscaProduto").append("<li><a class='itemProdutoResult' href='#' data-preco='" + produto.precoUnitario + "' data-nome='" + produto.nome + "' data-id=" + produto.id + " data-cpf='" + produto.codigo + "'>" + produto.nome + " - " + produto.codigo + " - R$" + moeda(produto.precoUnitario) + "</a></li>");
-            });
-
-        },
-        error: function(result) {
-            $("#buscaProdutoload").hide();
-            $("#errorLoadProduto").html(getErrorMessage(result.responseText));
-            $("#errorLoadProduto").show();
-        }
-    });
-
-}
-
 $(".itemClienteResult").live("click", function() {
     $("#hiddenIdCliente").val($(this).attr("data-id"));
     $("#inputNomeCliente").val($(this).attr("data-nome"));
@@ -127,31 +78,6 @@ $(".itemClienteResult").live("click", function() {
 
     $("#clienteModal").modal("hide");
 
-    verificaFinalizarVenda();
-});
-
-$(".itemProdutoResult").live("click", function() {
-    $("#hiddenIdProduto").val($(this).attr("data-id"));
-    $("#hiddenPrecoProduto").val($(this).attr("data-preco"));
-    $("#inputNomeProduto").val($(this).attr("data-nome"));
-    $("#inputCodigoProduto").val($(this).attr("data-codigo"));
-
-    $("#spanPrecoProduto").html("R$ " + moeda($(this).attr("data-preco")));
-
-    $("#inputNomeProduto").attr('disabled', 'disabled');
-    $("#inputCodigoProduto").attr('disabled', 'disabled');
-
-    $("#okProduto").show();
-
-    $("#errorProduto").hide();
-
-    $("#produtoModal").modal("hide");
-
-    verificaFinalizarVenda();
-});
-
-$("#inputData").change(function() {
-    $("#okData").show();
     verificaFinalizarVenda();
 });
 
@@ -191,6 +117,91 @@ $("#btnNovoCliente").click(function() {
         $("#errorNewCliente").html("Preencher nome e cpf");
     }
 });
+
+//produto
+$("#btnModalBuscarProduto").click(function() {
+
+    $(".itemProduto").parent().removeClass("alert-danger").addClass("alert-success");
+    $("#errorProduto").hide();
+
+    $("#produtoModal").modal("show");
+
+    if ($("#inputNomeProduto").val().length > 0)
+    {
+        $("#inputBuscarProduto").val($("#inputNomeProduto").val());
+    }
+});
+
+
+
+$("#inputBuscarProduto").keydown(function(event) {
+    if (event.keyCode == 13) {
+        buscarProduto();
+    }
+});
+
+
+$("#btnBuscarProduto").click(function() {
+    buscarProduto();
+});
+
+
+function buscarProduto()
+{
+    $("#itemResultadoBuscaProduto").html("");
+    $("#errorLoadProduto").hide();
+    $("#buscaProdutoload").show();
+
+
+    $.ajax({
+        type: "post",
+        dataType: "json",
+        url: rootUrl + "produto/search",
+        data: JSON.stringify({busca: $("#inputBuscarProduto").val()}),
+        success: function(data) {
+            $("#buscaProdutoload").hide();
+
+            data.result.forEach(function(produto) {
+                $("#itemResultadoBuscaProduto").append("<li><a class='itemProdutoResult' href='#' data-preco='" + produto.precoUnitario + "' data-nome='" + produto.nome + "' data-id=" + produto.id + " data-cpf='" + produto.codigo + "'>" + produto.nome + " - " + produto.codigo + " - R$" + moeda(produto.precoUnitario) + "</a></li>");
+            });
+
+        },
+        error: function(result) {
+            $("#buscaProdutoload").hide();
+            $("#errorLoadProduto").html(getErrorMessage(result.responseText));
+            $("#errorLoadProduto").show();
+        }
+    });
+
+}
+
+
+
+$(".itemProdutoResult").live("click", function() {
+    $("#hiddenIdProduto").val($(this).attr("data-id"));
+    $("#hiddenPrecoProduto").val($(this).attr("data-preco"));
+    $("#inputNomeProduto").val($(this).attr("data-nome"));
+    $("#inputCodigoProduto").val($(this).attr("data-codigo"));
+
+    $("#spanPrecoProduto").html("R$ " + moeda($(this).attr("data-preco")));
+
+    $("#inputNomeProduto").attr('disabled', 'disabled');
+    $("#inputCodigoProduto").attr('disabled', 'disabled');
+
+    $("#okProduto").show();
+
+    $("#errorProduto").hide();
+
+    $("#produtoModal").modal("hide");
+
+    verificaFinalizarVenda();
+});
+
+$("#inputData").change(function() {
+    $("#okData").show();
+    verificaFinalizarVenda();
+});
+
 
 
 
