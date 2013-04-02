@@ -9,7 +9,7 @@ Este projeto contém todo o código fonte do livro, no qual você usar como refe
     login: admin 
     senha: admin
 
-## Projetos:
+## Projetos
 
 **rest-base-flex** Contém um pequeno projeto em Flex que acessa o servidor através de HTTP, obtendo uma mensagem "Hello World".
 
@@ -22,6 +22,7 @@ diversas clases e métodos que são acessados via RESTful para a manipulação d
 
 **sistema-vendas-jquery** Contém um projeto completo em HTML/jquery, com telas em html e programação em javascript para acessar o servidor restul *sistema-vendas-server*.
 
-
+## Uma observação sobre deploy em sistemas linux
+O sistema demo está em um host da bluehost, linux. Como o linux é case sensitive, foi preciso alterar o nome dos arquivos na pasta classes para minúsculas e também o nome das tabelas no banco de dados. Caso tenha algum problema, fale conosco.
 
 
