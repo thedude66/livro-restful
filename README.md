@@ -9,6 +9,10 @@ Este projeto contém todo o código fonte do livro, no qual você usar como refe
     login: admin 
     senha: admin
 
+Voc também pode logar como vendedor ou cliente, bastando criar um vendedor com o login e senha e depois logando com ele. Como vendedor, é possível ver a tela de ponto de venda.
+
+Telas: http://imgur.com/a/yaBXq#4, http://i.imgur.com/ZY38mg8.png
+
 ## Projetos
 
 **rest-base-flex** Contém um pequeno projeto em Flex que acessa o servidor através de HTTP, obtendo uma mensagem "Hello World".
